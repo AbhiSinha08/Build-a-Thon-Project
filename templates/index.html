@@ -22,9 +22,9 @@
                       <br>
                       <form action="/login" method="get">
                         <span class="font-sans font-bold">Employee id</span><br><br>
-                        <input type="text" name="login" id="login" >
+                        <input type="text" name="login" id="login" class="p-1">
                         <br><br>
-                        <input class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-700 rounded-full px-3 py-1 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit" value="Submit" name="submit">
+                        <input class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-700 rounded-full px-3 py-1 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit" value="Log In">
                       </form>
                   </div>
                 </div>
@@ -37,9 +37,9 @@
                         <br>
                         <form action="/adminportal" method= "post">
                           <span class="font-sans font-bold">Admin password</span><br><br>
-                          <input type="text"  name="password" id="password">
+                          <input type="password" name="password" id="password" class="p-1">
                           <br><br>
-                          <input class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-800 rounded-full px-3 py-1 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit" value="Submit" name="submit" >
+                          <input class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-800 rounded-full px-3 py-1 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit" value="Log In">
                         </form>                    
                       </div>
                     <div class="px-6 pt-4 pb-2 text-center">
@@ -48,10 +48,14 @@
                 </div>
               </div>
             <br>
-            <a href="/signup">
-                <button class=" hover:bg-black px-36 p-5 bg-white rounded-full text-center font-bold font-sans text-xl  focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent ">Employee sign up</button>
-            </a>
-            
     </div>
+    <span class="flex justify-center text-blue-300 py-3 text-xl font-semibold">
+      {% if reg %}
+        {{ reg }}
+      {% endif %}
+  </span>
+    <a href="/signup" class="flex justify-center">
+      <button class=" hover:bg-black hover:text-blue-400 px-36 p-5 bg-white rounded-full text-center font-bold font-sans text-xl  focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent ">Employee sign up</button>
+    </a>
 </body>
 </html>
