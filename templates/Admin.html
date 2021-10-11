@@ -39,9 +39,11 @@
               <button class="bg-white p-7 py-2 rounded" id="event">
                 Event Notification
               </button>
-            </div>
+            </div><br><br>
             <div>
-              <div class="block1 hidden">
+              <div class="block1 hidden ">
+                <div class="grid grid-cols-2 gap-20">
+                <span>
                 <form action="/adminportal">
                   <h3>Set Minimal Transaction Score</h3>
                   <input type="text" name="minscore" id="minscore" class="w-full
@@ -51,7 +53,14 @@
                   <input type="text" name="minscore" id="minscore" class="w-full
                   px-4 py-2 mt-2 border rounded-md focus:outline-none
                   focus:ring-1 focus:ring-blue-700"">
-
+                  <div class="flex items-baseline justify-around">
+                    <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Submit</button>
+                    <!-- <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a> -->
+                  </div>
+                </form>
+                </span>
+                <span>
+                  <form action="/adminportal">
                   <h3>Set Minimal Monthly Ahievement</h3>
                   <input type="text" name="minscore" id="minscore" class="w-full
                   px-4 py-2 mt-2 border rounded-md focus:outline-none
@@ -60,19 +69,25 @@
                   <input type="text" name="minscore" id="minscore" class="w-full
                   px-4 py-2 mt-2 border rounded-md focus:outline-none
                   focus:ring-1 focus:ring-blue-700"">
-                </form>
+                  <div class="flex items-baseline justify-around">
+                    <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Submit</button>
+                    <!-- <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a> -->
+                  </div>
+                  </form>
+                </span>
+              </div>
               </div>
               <div class="block2 p-5 hidden">
                 <form
-                  action="/adminportal"
-                  class="flex flex-col-3 justify-center gap-32">
-                  <span>
+                  action="/adminportal">
+                  <div class="flex flex-col-2 gap-32">
+                  <span class="flex justify-start">
                     <h3>Set Notification Time For Activity Status </h3>
-                    <br />
+                    <br/>
                     <input type="time" name="time" id="time" class="px-12 flex justify-around" />
                   </span>
-                  <span>
-                    <h3>Frequency </h3>
+                  <span class="flex justify-end">
+                    <h3>Frequency </h3>&nbsp; &nbsp;
                     <br />
                     <input list="frequency" />
                     <datalist id="frequency">
@@ -82,18 +97,28 @@
                       <option value="Once in a month "></option>
                     </datalist>
                   </span>
+                  </div><br><br>
+                  <div class="flex items-baseline justify-around">
+                    <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Submit</button>
+                    <!-- <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a> -->
+                  </div>
                 </form>
               </div>
-              <div class="block3 p-5 hidden">
+              <div class="block3 p-1 hidden">
                 <form
                   action="/adminportal">
-                  <div class="flex flex-col-2 justify-around gap-32">
-                  <span>
+                  <div class="flex flex-col-3 gap-5">
+                  <span class=" flex justify-start">
                     <h3>Set Notification Time</h3>
                     <br />
                     <input type="time" name="time" id="time" class="px-12" />
                   </span>
                   <span>
+                    <input type="checkbox" name="check" id="check">
+                    <label for="everyday">Everyday</label>
+                  </span>
+                  <span class=" flex justify-end">
+                    
                     <h3>For Number of Days</h3>
                     <br />
                     <input list="nofday" />
@@ -107,25 +132,29 @@
                       <option value="For One Month"></option>
                     </datalist>
                   </span>
-                </div><br><br>
+                  </div><br><br>
                   <div>
                     <h3>Detailed Notification</h3>
-                    <input type="text" name="minscore" id="minscore" class="w-full
+                    <textarea type="text" name="minscore" id="minscore" class="w-full
                     px-4 py-2 mt-2 border rounded-md focus:outline-none
-                    focus:ring-1 focus:ring-blue-700"">
+                    focus:ring-1 focus:ring-blue-700"></textarea>
+                  </div>
+                  <div class="flex items-baseline justify-around">
+                    <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Submit</button>
+                    <!-- <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a> -->
                   </div>
                 </form>
               </div>
               <div class="block4 p-5 hidden">
                 <form
                   action="/adminportal">
-                  <span class="flex flex-col-3 justify-center gap-10">
-                  <span>
+                  <span class="flex flex-col-3 gap-10">
+                  <span class=" flex justify-start">
                     <h3>Set date of Event </h3>
                     <br />
                     <input type="date" name="time" id="time" class="px-12" /><br><br>
                     </span>
-                    <span>
+                    <span class=" flex justify-end">
                         <h3>For Number of Days</h3>
                         <br />
                         <input list="nofday" />
@@ -142,9 +171,13 @@
                     </span>
                     <div>
                         <h3>Event discription </h3>
-                        <input type="text" name="minscore" id="minscore" class="w-full
+                        <textarea type="text" name="minscore" id="minscore" class="w-full
                         px-4 py-2 mt-2 border rounded-md focus:outline-none
-                        focus:ring-1 focus:ring-blue-700"">
+                        focus:ring-1 focus:ring-blue-700"></textarea>
+                      </div>
+                      <div class="flex items-baseline justify-around">
+                        <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Submit</button>
+                        <!-- <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a> -->
                       </div>
                   </span>
                 </form>
