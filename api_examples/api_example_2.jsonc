@@ -1,0 +1,7 @@
+// send to /api with POST method
+
+{
+    "Header": "Monthly Achievement", // Defining the type of data to be fed
+    "Employee_id": 12345678, // Defining for whom monthly achievement is to be added
+    "Achievement %": 75 //Monthly achievement % to be added
+}

@@ -3,10 +3,30 @@ import configparser
 cfg = configparser.ConfigParser()
 cfg.read("config.ini")
 
-host = cfg['mysql']['host']
-port = int(cfg['mysql']['port'])
-user = cfg['mysql']['user']
-password = cfg['mysql']['password']
-database = cfg['mysql']['db']
+HOST = cfg['mysql']['host']
+PORT = int(cfg['mysql']['port'])
+USER = cfg['mysql']['user']
+PASSWORD = cfg['mysql']['password']
+DATABASE = cfg['mysql']['db']
 
-adminPW = cfg['admin portal']['password']
+ADMIN_PW = cfg['admin portal']['password']
+
+
+
+cfg.read("notifications.ini")
+
+ACHIEVE_LEV1 = cfg['Score Based']['Below_Minimum']
+ACHIEVE_LEV2 = cfg['Score Based']['Below_Optimal']
+ACHIEVE_LEV3 = cfg['Score Based']['Above_Optimal']
+
+SCORE_DAY_LEV1 = cfg['Score Based']['Below_Minimum']
+SCORE_DAY_LEV2 = cfg['Score Based']['Below_Optimal']
+SCORE_DAY_LEV3 = cfg['Score Based']['Above_Optimal']
+
+SCORE_WEEK_LEV1 = SCORE_DAY_LEV1.replace("today", "this week")
+SCORE_WEEK_LEV2 = SCORE_DAY_LEV2.replace("today", "this week")
+SCORE_WEEK_LEV3 = SCORE_DAY_LEV3.replace("today", "this week")
+
+SCORE_MONTH_LEV1 = SCORE_DAY_LEV1.replace("today", "this month")
+SCORE_MONTH_LEV2 = SCORE_DAY_LEV2.replace("today", "this month")
+SCORE_MONTH_LEV3 = SCORE_DAY_LEV3.replace("today", "this month")

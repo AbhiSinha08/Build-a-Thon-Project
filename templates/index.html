@@ -4,42 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Notification Engine - Home</title>
     <link rel="stylesheet" href="../static/styles1.css">
 </head>
 <!-- <body class="w-full h-full bg-cover bg-no-repeat " style="background-image: url('/public/image/homeback.jpg');"> -->
 <body class="bg-gradient-to-r from-gray-800 via-gray-900 to-black ">
-    <h1 class=" text-4xl text-center py-6 text-black font-extrabold font-sans shadow-2xl bg-gradient-to-r from-blue-300 via-blue-500 to-black">HOME</h1>
+    <h1 class=" text-4xl text-center py-6 text-c5 font-extrabold font-sans shadow-2xl bg-gradient-to-r from-blue-300 via-blue-500 to-black">Home - Notification Engine</h1>
     <div class="flex justify-around p-4">
         <span class=" ">
             <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
                 <!--Card 1-->
-                <div class=" p-8 rounded overflow-auto drop-shadow-2xl bg-blue-300">
+                <div class=" p-8 rounded overflow-auto drop-shadow-2xl bg-blue-300 mx-8">
                   <!-- <img class="w-full" src="/mountain.jpg" alt="Mountain"> -->
                   <div class="px-6 py-4 text-center">
-                    <div class="font-bold text-2xl inline-block bg-c4 rounded-full px-3 py-1  text-blue-300 mr-2 mb-2">Log in as employee </div>
+                    <div class="font-bold text-xl inline-block bg-c4 rounded-xl px-6 py-2  text-blue-300 mr-2 mb-2">Log in as employee </div>
                     <p class="text-c4 text-base">
                       <br>
                       <form action="/login" method="get">
                         <span class="font-sans font-bold">Employee id</span><br><br>
                         <input type="text" name="login" id="login" class="p-1">
                         <br><br>
-                        <input class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-700 rounded-full px-3 py-1 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit" value="Log In">
+                        <button class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-700 rounded-full px-4 py-2 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit"> Log In </button>
                       </form>
                   </div>
                 </div>
                 <!--Card 2-->
-                <div class=" p-8 rounded overflow-auto drop-shadow-2xl bg-blue-500">
+                <div class=" p-8 rounded overflow-auto drop-shadow-2xl bg-blue-500 mx-8">
                     <!-- <img class="w-full" src="/mountain.jpg" alt="Mountain"> -->
                     <div class="px-6 py-4 text-center">
-                      <div class="font-bold text-2xl inline-block bg-c4 rounded-full px-3 py-1  text-blue-400 mr-2 mb-2"> Admin portal </div>
+                      <div class="font-bold text-xl inline-block bg-c4 rounded-xl px-6 py-2  text-blue-400 mr-2 mb-2"> Admin portal </div>
                       <p class="text-c4 text-base">
                         <br>
                         <form action="/adminportal" method= "post">
                           <span class="font-sans font-bold">Admin password</span><br><br>
                           <input type="password" name="password" id="password" class="p-1">
                           <br><br>
-                          <input class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-800 rounded-full px-3 py-1 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit" value="Log In">
+                          <button class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-800 rounded-full px-4 py-2 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit"> Log In </button>
                         </form>                    
                       </div>
                     <div class="px-6 pt-4 pb-2 text-center">

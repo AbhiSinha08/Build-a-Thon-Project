@@ -3,10 +3,10 @@ from cfg import *
 
 def connection(database=False):
     args = {
-        'host': host,
-        'port': port,
-        'user': user,
-        'password': password,
+        'host': HOST,
+        'port': PORT,
+        'user': USER,
+        'password': PASSWORD,
         'use_pure': True
     }
     if database:
@@ -27,7 +27,7 @@ except mysql.errors.InterfaceError:
 
 def createDB():
     cursor = conn.cursor()
-    cursor.execute(f"CREATE DATABASE {database}")
+    cursor.execute(f"CREATE DATABASE {DATABASE}")
     cursor.close()
 
 def createUsersTable():
@@ -40,15 +40,17 @@ def createUsersTable():
                     age INT,
                     grp CHAR(3) CHARSET utf8,
                     email VARCHAR(100) CHARSET utf8,
-                    phone CHAR(10)
+                    phone CHAR(10),
+                    score INT,
+                    achievement INT
                 )""")
     conn.commit()
     cur.close()
 
 def newUser(v):
     sql = """INSERT INTO users
-            (name, eid, sex, age, grp, email, phone)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+            (name, eid, sex, age, grp, email, phone, score, achievement)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, 0, 0)"""
     values = (v['name'], v['eid'], v['sex'], v['age'],
             v['grp'], v['email'], v['phone'])
     cur = conn.cursor()
@@ -78,13 +80,12 @@ def insert(v, table="admin"):
     conn.commit()
     cur.close()
 
-def pending(grp="ALL", table="admin"):
+def pending(type="", table="admin"):
     sql = f"""SELECT * FROM {table}
-            WHERE (grp = %s OR grp = 'ALL')
+            WHERE triggers LIKE '%{type}%'
             LIMIT 25"""
-    values = (grp,)
     cur = conn.cursor()
-    cur.execute(sql, values)
+    cur.execute(sql)
     result = cur.fetchall()
     cur.close()
     return result
@@ -98,16 +99,47 @@ def delete(id, table="admin"):
     conn.commit()
     cur.close()
 
+def addScore(eid, score):
+    sql = f"""UPDATE users
+            SET score = score + {score}
+            WHERE eid = %s"""
+    values = (eid,)
+    cur = conn.cursor()
+    cur.execute(sql, values)
+    conn.commit()
+    cur.close()
+
+def addAchievement(eid, percent):
+    sql = f"""UPDATE users
+            SET achievement = {percent}
+            WHERE eid = %s"""
+    values = (eid,)
+    cur = conn.cursor()
+    cur.execute(sql, values)
+    conn.commit()
+    cur.close()
+
+def getUsers(eid=False):
+    if eid:
+        sql = f"""SELECT grp, email, phone, score, achievement
+                FROM users WHERE eid = {eid}"""
+    else:
+        sql = "SELECT grp, email, phone, score, achievement FROM users"
+    cur = conn.cursor()
+    cur.execute(sql)
+    result = cur.fetchall()
+    cur.close()
+    return result
 
 cur = conn.cursor()
 newDB = False
 cur.execute("SHOW DATABASES")
-if (database,) not in cur.fetchall():
+if (DATABASE,) not in cur.fetchall():
     createDB()
     newDB = True
 cur.close()
 conn.close()
-conn = connection(database)
+conn = connection(DATABASE)
 if newDB:
     createUsersTable()
     createTable("admin")
@@ -118,7 +150,7 @@ if __name__ == '__main__':
     x = input("Do you want to delete the database? [Y/n] ").upper()
     if x == 'Y' or x == 'YES':
         cur = conn.cursor()
-        cur.execute(f"DROP DATABASE IF EXISTS {database}")
+        cur.execute(f"DROP DATABASE IF EXISTS {DATABASE}")
         cur.close()
         print("database deleted")
     print(conn)
