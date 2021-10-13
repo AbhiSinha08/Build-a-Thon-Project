@@ -40,9 +40,11 @@
             <button class="bg-white p-7 py-2 rounded" id="event">
               Event Notification
             </button>
-          </div><br><br>
+            <button class="bg-white p-7 py-2 rounded" id="role">
+              Group Notify
+            </button>          </div><br><br>
           <div>
-            <div class="block1">
+            <div class="block1 ">
               <div class="grid grid-cols-2 gap-20">
                 <span>
                   <form action="/adminportal/create/sc" method="post">
@@ -130,7 +132,59 @@
         </div>
         <div class="block3 p-1 hidden">
           <form action="/adminportal">
-            <div class="flex flex-col-3 gap-4">
+            <div class="block  ">
+              <div class="block ">
+                <span class="">Notification type </span><br><br>
+                    <div class="flex justify-around">
+                      <span>
+                        <label class="">
+                            <input type="radio" class="form-radio" name="notitype" value="rwd" >
+                            <span class="ml-2">Reward</span>
+                          </label>
+                          </span>
+                          <span>
+                          <label class="inline-flex items-center">
+                            <input type="radio" class="form-radio" name="notitype" value="rmd">
+                            <span class="ml-2">Reminder</span>
+                          </label>
+                          </span>
+                          <span>
+                          <label class="inline-flex items-center">
+                            <input type="radio" class="form-radio" name="notitype" value="alt">
+                            <span class="ml-2">Alert</span>
+                          </label>
+                        </span>
+                    </div>
+            </div><br>
+            <!-- <div class="flex justify-evenly">
+              <span class="">Position &nbsp &nbsp </span>
+                  <span>
+                      <label class="">
+                          <input type="radio" class="form-radio" name="radio2" value="21" >
+                          <span class="ml-2">CEO</span>
+                        </label>
+                  </span>
+                  <span>
+                        <label class="">
+                          <input type="radio" class="form-radio" name="radio2" value="22">
+                          <span class="ml-2">Team leader</span>
+                        </label>
+                  </span>
+                  <span>    
+                        <label class="">
+                          <input type="radio" class="form-radio" name="radio2" value="23">
+                          <span class="ml-2">Manager</span>
+                        </label>
+                  </span>
+                  <span>
+                        <label class="">
+                          <input type="radio" class="form-radio" name="radio2" value="24">
+                          <span class="ml-2">Members</span>
+                        </label>
+                  </span>
+          </div>-->
+        </div><br> 
+            <div class="flex flex-col-3 gap-4 justify-center">
               <span class=" flex justify-start">
                 <h3>Set Notification Time</h3>
                 <br />
@@ -173,9 +227,76 @@
                 <input type="text" name="eventdays" id="eventdays"><br>
                 <h3>Days</h3>
               </span>
-            </span>
+            </span><br>
             <div>
               <h3>Event discription </h3>
+              <textarea type="text" name="minscore" id="minscore" class="w-full
+                        px-4 py-2 mt-2 border rounded-md focus:outline-none
+                        focus:ring-1 focus:ring-blue-700"></textarea>
+            </div>
+            <div class="flex items-baseline justify-around">
+              <input type="hidden" name="password" id="password" value="{{ pw }}">
+              <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Create</button>
+            </div>
+            </span>
+          </form>
+        </div>
+        <div class="block5 p-5 hidden">
+          <form action="/adminportal">
+            <div class="block ">
+              <span class="">Notification type </span><br>
+                  <div class="flex justify-around">
+                    <span>
+                      <label class="">
+                          <input type="radio" class="form-radio" name="notitype" value="rwd" >
+                          <span class="ml-2">Reward</span>
+                        </label>
+                        </span>
+                        <span>
+                        <label class="inline-flex items-center">
+                          <input type="radio" class="form-radio" name="notitype" value="rmd">
+                          <span class="ml-2">Reminder</span>
+                        </label>
+                        </span>
+                        <span>
+                        <label class="inline-flex items-center">
+                          <input type="radio" class="form-radio" name="notitype" value="alt">
+                          <span class="ml-2">Alert</span>
+                        </label>
+                      </span>
+                  </div>
+          </div><br>
+            <div class="block">
+              <span class="">Positions</span>
+              <div class="mt-2 flex justify-around">
+                <div>
+                  <label class="inline-flex items-center">
+                    <input type="checkbox" id="CEO" class="form-checkbox" checked>
+                    <span class="ml-2">CEO</span>
+                  </label>
+                </div>
+                <div>
+                  <label class="inline-flex items-center">
+                    <input type="checkbox" id="manager" class="form-checkbox">
+                    <span class="ml-2">Manager</span>
+                  </label>
+                </div>
+                <div>
+                  <label class="inline-flex items-center">
+                    <input type="checkbox" id="staff" class="form-checkbox">
+                    <span class="ml-2">Staff</span>
+                  </label>
+                </div>
+                <div>
+                  <label class="inline-flex items-center">
+                    <input type="checkbox" id="teamlead" class="form-checkbox" checked>
+                    <span class="ml-2">Team leader</span>
+                  </label>
+                </div>
+              </div>
+            </div><br>
+            <div>
+              <h3>Notification discription </h3>
               <textarea type="text" name="minscore" id="minscore" class="w-full
                         px-4 py-2 mt-2 border rounded-md focus:outline-none
                         focus:ring-1 focus:ring-blue-700"></textarea>
@@ -192,18 +313,60 @@
     </div>
   </div>
   <div>
-    <div class="bg-blue-200 rounded-3xl p-5 shadow-2xl font-sans">
-      <h1 class="font-bold text-center">Notification suggestions</h1>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus
-      dolores maxime iusto corrupti placeat ex odit earum, mollitia
-      distinctio, magni, recusandae facilis culpa sed ducimus omnis
-      tenetur deleniti vitae id. Lorem ipsum, dolor sit amet consectetur
-      adipisicing elit. Voluptatibus nobis et libero? Reprehenderit hic
-      vero nam, consectetur illum, dolorem ducimus pariatur iusto
-      accusantium laudantium dolorum saepe, molestias in non illo! Lorem
-      ipsum, dolor sit amet consectetur adipisicing elit. Deserunt nisi
+    <div class="bg-blue-200 rounded-3xl p-5 shadow-2xl font-sans ">
+      <h1 class="font-bold text-center">Notification suggestions</h1><br>
+      <!-- <div class=" ">
+      <div class="bg-white rounded-3xl p-5 shadow-2xl font-sans">
+        <img src="https://www.tataharperskincare.com/media/wysiwyg/r/e/re-hand.png" alt="Reward">
+        <figure data-content-type="image" data-appearance="full-width" data-element="main" style="margin-bottom: 15px; border-style: none;"><img class="pagebuilder-mobile-hidden" src="https://www.tataharperskincare.com/media/wysiwyg/r/e/re-hand.png" alt="Tata Harper Skincare Rewards" title="Tata Harper Skincare Rewards" data-element="desktop_image" style="border-style: none; border-width: 1px; border-radius: 0px; max-width: 100%; height: auto;"><img class="pagebuilder-mobile-only" src="https://www.tataharperskincare.com/media/wysiwyg/r/e/re-hand.png" alt="Tata Harper Skincare Rewards" title="Tata Harper Skincare Rewards" data-element="mobile_image" style="border-style: none; border-width: 1px; border-radius: 0px; max-width: 100%; height: auto;">
+        <img class="pagebuilder-mobile-hidden" src="https://www.tataharperskincare.com/media/wysiwyg/r/e/re-hand.png" alt="Tata Harper Skincare Rewards" title="Tata Harper Skincare Rewards" data-element="desktop_image" style="border-style: none; border-width: 1px; border-radius: 0px; max-width: 100%; height: auto;">
+      </figure>
+      
+      <img src="https://www.tataharperskincare.com/media/wysiwyg/r/e/re-hand.png" alt="">
+      </div></div> -->
+      
+      <div class="bg-white rounded-3xl p-5  shadow-2xl font-sans flex flex-col-2">
+        
+        <svg class="h-10 w-10 fill-current text-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd" />
+          <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
+        </svg>
+        <span class="pl-3">
+          <h4 class=" text-green-600 font-bold">Rewards </h4>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, at.</p>
+          <span class="flex justify-around mt-3">
+            <a href="#" class="text-sm text-blue-600 hover:underline">Notify all</a>
+            <a href="#" class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+          </span>
 
-    </div>
+        </span>
+      </div><br>
+      <div class="bg-white rounded-3xl p-5 shadow-2xl font-sans flex flex-col-2">
+        <svg class="h-10 w-10 fill-current text-yellow-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+        </svg>
+        <span class="pl-3"><h4 class="text-yellow-300 font-bold">Reminder </h4>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, at.</p>
+        
+        <span class="flex justify-around mt-3">
+            <a href="#" class="text-sm text-blue-600 hover:underline">Notify all</a>
+            <a href="#" class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+          </span>
+      </div><br>
+      <div class="bg-white rounded-3xl p-5 shadow-2xl font-sans flex flex-col-2">
+        <svg class="h-10 w-10 fill-current text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+        <span class="pl-3"><h4 class="text-red-500 font-bold">Alert  </h4>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, at.</p>
+          <span class="flex justify-around mt-3">
+            <a href="#" class="text-sm text-blue-600 hover:underline">Notify all</a>
+            <a href="#" class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+          </span>
+        </span>
+      </div><br>
+    
+  </div>
   </div>
   </div>
   </div>
@@ -212,10 +375,12 @@
     const butn2 = document.querySelector("#status");
     const butn3 = document.querySelector("#time");
     const butn4 = document.querySelector("#event");
+    const butn5 = document.querySelector("#role");
     const form1 = document.querySelector(".block1");
     const form2 = document.querySelector(".block2");
     const form3 = document.querySelector(".block3");
     const form4 = document.querySelector(".block4");
+    const form5 = document.querySelector(".block5");
 
     butn1.addEventListener("click", () => {
       butn1.style.backgroundColor = "#3B82F6"
@@ -226,10 +391,14 @@
       butn3.style.color = '#1E3A8A'
       butn4.style.backgroundColor = "white"
       butn4.style.color = '#1E3A8A'
+      butn5.style.backgroundColor = "white"
+      butn5.style.color = '#1E3A8A'
       form1.style.display = "block";
       form2.style.display = "none";
       form3.style.display = "none";
       form4.style.display = "none";
+      form5.style.display = "none";
+
     });
     butn2.addEventListener("click", () => {
       butn2.style.backgroundColor = "#3B82F6"
@@ -240,38 +409,67 @@
       butn3.style.color = '#1E3A8A'
       butn4.style.backgroundColor = "white"
       butn4.style.color = '#1E3A8A'
+      butn5.style.backgroundColor = "white"
+      butn5.style.color = '#1E3A8A'
       form1.style.display = "none";
       form2.style.display = "block";
       form3.style.display = "none";
       form4.style.display = "none";
+      form5.style.display = "none";
+
     });
     butn3.addEventListener("click", () => {
-      butn3.style.backgroundColor = "#3B82F6"
-      butn3.style.color = 'white'
       butn1.style.backgroundColor = "white"
       butn1.style.color = '#1E3A8A'
       butn2.style.backgroundColor = "white"
       butn2.style.color = '#1E3A8A'
+      butn3.style.backgroundColor = "#3B82F6"
+      butn3.style.color = 'white'
       butn4.style.backgroundColor = "white"
       butn4.style.color = '#1E3A8A'
+      butn5.style.backgroundColor = "white"
+      butn5.style.color = '#1E3A8A'
       form1.style.display = "none";
       form2.style.display = "none";
       form3.style.display = "block";
       form4.style.display = "none";
+      form5.style.display = "none";
+
     });
     butn4.addEventListener("click", () => {
-      butn4.style.backgroundColor = "#3B82F6"
-      butn4.style.color = 'white'
       butn1.style.backgroundColor = "white"
       butn1.style.color = '#1E3A8A'
       butn3.style.backgroundColor = "white"
       butn3.style.color = '#1E3A8A'
       butn2.style.backgroundColor = "white"
       butn2.style.color = '#1E3A8A'
+      butn4.style.backgroundColor = "#3B82F6"
+      butn4.style.color = 'white'
+      butn5.style.backgroundColor = "white"
+      butn5.style.color = '#1E3A8A'
       form1.style.display = "none";
       form2.style.display = "none";
       form3.style.display = "none";
       form4.style.display = "block";
+      form5.style.display = "none";
+    });
+    butn5.addEventListener("click", () => {
+      butn1.style.backgroundColor = "white"
+      butn1.style.color = '#1E3A8A'
+      butn2.style.backgroundColor = "white"
+      butn2.style.color = '#1E3A8A'
+      butn3.style.backgroundColor = "white"
+      butn3.style.color = '#1E3A8A'
+      butn4.style.backgroundColor = "white"
+      butn4.style.color = '#1E3A8A'
+      butn5.style.backgroundColor = "#3B82F6"
+      butn5.style.color = 'white'
+      form1.style.display = "none";
+      form2.style.display = "none";
+      form3.style.display = "none";
+      form4.style.display = "none";
+      form5.style.display = "block";
+
     });
   </script>
 </body>
