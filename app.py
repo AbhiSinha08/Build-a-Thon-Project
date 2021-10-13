@@ -1,35 +1,65 @@
 from flask import Flask, render_template, request, redirect, url_for
 import db
 import threading
-from triggers import *
+import timer
 import bots.mail
 import bots.telegram
 
 app = Flask(__name__)
 
-threading.Thread(target=startDay, daemon=True).start()
-threading.Thread(target=startMonth, daemon=True).start()
-threading.Thread(target=startWeek, daemon=True).start()
+threading.Thread(target=timer.startDay, daemon=True).start()
+threading.Thread(target=timer.startMonth, daemon=True).start()
+threading.Thread(target=timer.startWeek, daemon=True).start()
 
-def notify(email, phone, content, sub="Auto-Generated Notification"):
+def notify(email, phone, content, type, sub="Auto-Generated Notification"):
+    if type == "":
+        type = "rmd"
     bots.mail.sendMail(email, sub, content)
     bots.telegram.sendMsg(phone, content)
 
 
 def MonthlyAchievementNotis(eid, percent):
     try:
-        notification = db.pending(type="MA")[0]
+        notification = db.pending(trig="MA")[0]
     except:
         return
     user = db.getUsers(eid)[0]
     email, phone = user[1], user[2]
     _, minn, opt = notification[4].split()
     if percent < int(minn):
-        notify(email, phone, db.ACHIEVE_LEV1)
+        notify(email, phone, db.ACHIEVE_LEV1, 'alr')
     elif percent < int(opt):
-        notify(email, phone, db.ACHIEVE_LEV2)
+        notify(email, phone, db.ACHIEVE_LEV2, 'rmd')
     else:
-        notify(email, phone, db.ACHIEVE_LEV3)
+        notify(email, phone, db.ACHIEVE_LEV3, 'rwd')
+
+def timeNotif(hr, mn, freq, content, id, type='rmd'):
+    while freq > 0:
+        timer.afterTime(hr, mn)
+        users = db.getUsers()
+        for user in users:
+            email, phone = user[1], user[2]
+            notify(email, phone, content, type)
+
+        newTrig = f"TM {hr} {mn} {freq-1}"
+        db.changeTrigger(id, newTrig)
+        freq -= 1
+        timer.time.sleep(2)
+    db.delete(id)
+
+
+
+notifications = db.pending(trig="TM")
+for notification in notifications:
+    _, hr, mn, freq = notification[4].split()
+    id = notification[0]
+    hr, mn, freq = int(hr), int(mn), int(freq)
+    content = notification[1]
+    type = notification[2]
+    threading.Thread(target=timeNotif,
+                        daemon=True,
+                        args=(hr, mn, freq, content, id, type)).start()
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -80,9 +110,9 @@ def api():
 
 @app.route('/adminportal/create/<type>', methods=['POST'])
 def create(type):
-    if type == 'ma':
+    if type == 'monthachievement':
         try:
-            id = db.pending(type="MA")[0][0]
+            id = db.pending(trig="MA")[0][0]
             db.delete(id)
         except:
             pass
@@ -96,7 +126,7 @@ def create(type):
                 'triggers': f"MA {minn} {opt}"
             }
             db.insert(values)
-    elif type == 'sc':
+    elif type == 'score':
         x = request.form['freq']
         if x == 'daily':
             x = 'SD'
@@ -105,7 +135,7 @@ def create(type):
         elif x == 'monthly':
             x = 'SM'
         try:
-            id = db.pending(type=x)[0][0]
+            id = db.pending(trig=x)[0][0]
             db.delete(id)
         except:
             pass
@@ -119,6 +149,38 @@ def create(type):
                 'triggers': f"{x} {minn} {opt}"
             }
             db.insert(values)
+    elif type == 'time':
+        clock = request.form['time']
+        hr, mn = map(int, clock.split(':'))
+        check = request.form.get('check')
+        content = request.form['content']
+        notitype = request.form['type']
+        values = {}
+        if check:
+            noOfDays = int(request.form['freq'])
+        else:
+            noOfDays = 1
+        values['triggers'] = f"TM {hr} {mn} {noOfDays}"
+        values['content'] = content
+        values['grp'] = "ALL"
+        values['type'] = notitype
+        id = db.insert(values)
+        threading.Thread(target=timeNotif,
+                        daemon=True,
+                        args=(hr, mn, noOfDays, content, id, notitype)).start()
+    elif type == 'event':
+        content = request.form['content']
+        days = int(request.form['days'])
+        date = request.form['date']
+        yr, mon, dt = map(int, date.split('-'))
+        dt, mon = timer.notifDate(dt, mon, yr, days)
+        values = {
+            'content': content,
+            'grp': "ALL",
+            'type': "rmd",
+            'triggers': f"DT {dt} {mon}"
+        }
+        db.insert(values)
 
     return redirect(url_for("admin"), code=307)
 

@@ -78,11 +78,14 @@ def insert(v, table="admin"):
     cur = conn.cursor()
     cur.execute(sql, values)
     conn.commit()
+    id = cur.lastrowid
     cur.close()
+    return id
+    
 
-def pending(type="", table="admin"):
+def pending(trig="", table="admin"):
     sql = f"""SELECT * FROM {table}
-            WHERE triggers LIKE '%{type}%'
+            WHERE triggers LIKE '%{trig}%'
             LIMIT 25"""
     cur = conn.cursor()
     cur.execute(sql)
@@ -114,6 +117,16 @@ def addAchievement(eid, percent):
             SET achievement = {percent}
             WHERE eid = %s"""
     values = (eid,)
+    cur = conn.cursor()
+    cur.execute(sql, values)
+    conn.commit()
+    cur.close()
+
+def changeTrigger(id, trig):
+    sql = f"""UPDATE admin
+            SET triggers = '{trig}'
+            WHERE id = %s"""
+    values = (id,)
     cur = conn.cursor()
     cur.execute(sql, values)
     conn.commit()
