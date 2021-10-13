@@ -11,6 +11,8 @@ DATABASE = cfg['mysql']['db']
 
 ADMIN_PW = cfg['admin portal']['password']
 
+MAIL_ID = cfg['mail bot']['mail_id']
+MAIL_PASSWORD = cfg['mail bot']['password']
 
 
 cfg.read("notifications.ini")
