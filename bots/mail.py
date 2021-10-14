@@ -1,12 +1,10 @@
 from cfg import MAIL_ID, MAIL_PASSWORD
 import smtplib
-
-def sendMail(reciever, sub, content):
+sub="checking bot"
+body= "hey everyone !!"
+def sendMail(reciever, sub, body):
     #header
-    message = f"""From: eXlygenze {MAIL_ID}
-    To: {reciever}
-    Subject: {sub}\n
-    {content} """
+    message = 'Subject: {}\n\n{}'.format(sub,body)
 
     server = smtplib.SMTP("smtp.gmail.com" , 587)
     server.starttls()
@@ -17,4 +15,4 @@ def sendMail(reciever, sub, content):
         print("email has been send!")
     except smtplib.SMTPAuthenticationError:
         print("Unable to sign in!")
-    
+sendMail("karuna.sharma@iiitg.ac.in" , sub , body)
