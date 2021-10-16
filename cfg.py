@@ -13,6 +13,9 @@ ADMIN_PW = cfg['admin portal']['password']
 
 MAIL_ID = cfg['mail bot']['mail_id']
 MAIL_PASSWORD = cfg['mail bot']['password']
+SMTP_SERVER = cfg['mail bot']['smtp_server']
+SMTP_PORT = int(cfg['mail bot']['port'])
+SUBJECT = cfg['mail bot']['subject']
 
 API = cfg['sms bot']['API']
 

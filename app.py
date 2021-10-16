@@ -9,7 +9,7 @@ def notifyThread(email, phone, content, type, sub):
     bots.mail.sendMail(email, sub, content)
     bots.sms.sendMsg(phone, content)
 
-def notify(email, phone, content, type, sub="Auto-Generated Notification"):
+def notify(email, phone, content, type, sub=db.SUBJECT):
     if type == "":
         type = "rmd"
     threading.Thread(target=notifyThread,
@@ -134,11 +134,15 @@ def timeNotif(hr, mn, freq, content, id, type='rmd', eid=False):
 
 def rolesNotif(content, roles, type='rmd'):
     users = db.getUsers()
-    for user in users():
+    for user in users:
         if user[0] in roles:
             email, phone = user[1], user[2]
             notify(email, phone, content, type)
 
+def notifyAll(content, type):
+    for user in db.getUsers():
+        email, phone = user[1], user[2]
+        notify(email, phone, content, type)
 
 notifications = db.pending(trig="TM")
 for notification in notifications:
@@ -207,11 +211,41 @@ def createSelfNotification():
                     args=(hr, mn, noOfDays, content, id, "rmd", eid)).start()
     return redirect(url_for("user"), code=307)
 
+@app.route('/user/suggest', methods=['POST'])
+def suggest():
+    content = request.form['content']
+    notitype = request.form['type']
+    values = {}
+    values['triggers'] = "NULL"
+    values['content'] = content
+    values['grp'] = "ALL"
+    values['type'] = notitype
+    db.insert(values, table="suggestions")
+    return redirect(url_for("user"), code=307)
+
+
 @app.route('/adminportal', methods=['POST'])
 def admin():
     if request.form['password'] == db.ADMIN_PW:
-        return render_template("admin.html", pw=db.ADMIN_PW)
+        suggestions = db.pending(table="suggestions")
+        return render_template("admin.html", pw=db.ADMIN_PW, suggestions=suggestions)
     return render_template("index.html", reg="Wrong Password")
+
+@app.route('/adminportal/suggestion', methods=['POST'])
+def handleSuggestion():
+    task = request.form['task']
+    id = int(request.form['id'])
+    if task == 'notify':
+        notification = db.getNoti(id, table="suggestions")[0]
+        content = notification[0]
+        type = notification[1]
+        db.delete(id, table="suggestions")
+        threading.Thread(target=notifyAll,
+                        daemon=True,
+                        args=(content, type)).start()
+    elif task == 'discard':
+        db.delete(id, table="suggestions")
+    return redirect(url_for("admin"), code=307)
 
 @app.route('/api', methods=['POST'])
 def api():
@@ -317,7 +351,7 @@ def create(type):
         roles = request.form.getlist('roles')
         threading.Thread(target=rolesNotif,
                         daemon=True,
-                        args=(content, roles. notitype)).start()
+                        args=(content, roles, notitype)).start()
 
         
 

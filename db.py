@@ -88,8 +88,19 @@ def pending(trig="", table="admin"):
     sql = f"""SELECT * FROM {table}
             WHERE triggers LIKE '%{trig}%'
             LIMIT 25"""
-    cur = conn.cursor()
+    cur = conn.cursor(buffered=True)
     cur.execute(sql)
+    result = cur.fetchall()
+    cur.close()
+    return result
+
+def getNoti(id, table="admin"):
+    sql = f"""SELECT content, type, grp
+            FROM {table}
+            WHERE id = %s"""
+    values = (id,)
+    cur = conn.cursor(buffered=True)
+    cur.execute(sql, values)
     result = cur.fetchall()
     cur.close()
     return result
@@ -145,13 +156,13 @@ def getUsers(eid=False):
                 FROM users WHERE eid = {eid}"""
     else:
         sql = "SELECT grp, email, phone, score_d, score_w, score_m FROM users"
-    cur = conn.cursor()
+    cur = conn.cursor(buffered=True)
     cur.execute(sql)
     result = cur.fetchall()
     cur.close()
     return result
 
-cur = conn.cursor()
+cur = conn.cursor(buffered=True)
 newDB = False
 cur.execute("SHOW DATABASES")
 if (DATABASE,) not in cur.fetchall():

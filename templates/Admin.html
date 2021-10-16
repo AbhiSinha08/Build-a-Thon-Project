@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <div class="min-h-screen bg-gradient-to-r from-blue-700 to-black">
+  <div class="min-h-screen bg-gradient-to-r from-blue-700 to-indigo-900">
     <div class="shadow-2xl">
       <h1 class="
             text-4xl
@@ -296,6 +296,9 @@
       <div>
         <div class="bg-blue-200 rounded-3xl p-5 shadow-2xl font-sans">
           <h1 class="font-bold text-center pb-2">Notification suggestions</h1>
+          {% for notification in suggestions %}
+            
+          {% if notification[2] == 'rwd' %}
 
           <div class="bg-white rounded-3xl p-3 border-4 border-green-600 shadow-2xl font-sans flex flex-col-2">
             <svg class="h-10 w-10 fill-current text-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -304,53 +307,85 @@
                 clip-rule="evenodd" />
               <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
             </svg>
-            <span class="pl-3">
-              <h4 class=" text-green-600 font-bold">Rewards </h4>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, at.</p>
+            <span class="pl-3 w-full">
+              <h4 class=" text-green-600 font-bold mb-2">{{ notification[1] }} </h4>
+              <p class="text-sm"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos, doloremque!</p>
               <span class="flex justify-around mt-3">
-                <a href="#" class="text-sm text-blue-600 hover:underline">Notify all</a>
-                <a href="#" class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+                <form action="/adminportal/suggestion" method="post">
+                <input type="hidden" name="password" id="password" value="{{ pw }}">
+                <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                <input type="hidden" name="task" id="task" value="notify">
+                <button class="text-sm text-blue-600 hover:underline">Notify all</a>
+                </form>
+                <form action="/adminportal/suggestion" method="post">
+                <input type="hidden" name="password" id="password" value="{{ pw }}">
+                <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                <input type="hidden" name="task" id="task" value="discard">
+                <button class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+                </form>
               </span>
             </span>
           </div>
 
           <br>
-
-          <div class="bg-white rounded-3xl p-3 border-4 border-yellow-300 shadow-2xl font-sans flex flex-col-2">
-            <svg class="h-10 w-10 fill-current text-yellow-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          {% elif notification[2] == 'rmd' %}
+          <div class="bg-white rounded-3xl p-3 border-4 border-yellow-400 shadow-2xl font-sans flex flex-col-2">
+            <svg class="h-10 w-10 fill-current text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                 clip-rule="evenodd" />
             </svg>
-            <span class="pl-3">
-              <h4 class="text-yellow-300 font-bold">Reminder </h4>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, at.</p>
+            <span class="pl-3 w-full">
+              <h4 class="text-yellow-400 font-bold">{{ notification[1] }} </h4>
+              <br>
 
               <span class="flex justify-around mt-3">
-                <a href="#" class="text-sm text-blue-600 hover:underline">Notify all</a>
-                <a href="#" class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+                <form action="/adminportal/suggestion" method="post">
+                  <input type="hidden" name="password" id="password" value="{{ pw }}">
+                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                  <input type="hidden" name="task" id="task" value="notify">
+                  <button class="text-sm text-blue-600 hover:underline">Notify all</a>
+                  </form>
+                  <form action="/adminportal/suggestion" method="post">
+                  <input type="hidden" name="password" id="password" value="{{ pw }}">
+                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                  <input type="hidden" name="task" id="task" value="discard">
+                  <button class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+                  </form>
               </span>
           </div>
 
           <br>
-
+          {% elif notification[2] == 'alr' %}
           <div class="bg-white rounded-3xl p-3 border-4 border-red-500 shadow-2xl font-sans flex flex-col-2">
             <svg class="h-10 w-10 fill-current text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
                 d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
                 clip-rule="evenodd" />
             </svg>
-            <span class="pl-3">
-              <h4 class="text-red-500 font-bold">Alert </h4>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, at.</p>
+            <span class="pl-3 w-full">
+              <h4 class="text-red-500 font-bold">{{ notification[1] }} </h4>
+              <br>
               <span class="flex justify-around mt-3">
-                <a href="#" class="text-sm text-blue-600 hover:underline">Notify all</a>
-                <a href="#" class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+                <form action="/adminportal/suggestion" method="post">
+                  <input type="hidden" name="password" id="password" value="{{ pw }}">
+                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                  <input type="hidden" name="task" id="task" value="notify">
+                  <button class="text-sm text-blue-600 hover:underline">Notify all</a>
+                  </form>
+                  <form action="/adminportal/suggestion" method="post">
+                  <input type="hidden" name="password" id="password" value="{{ pw }}">
+                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                  <input type="hidden" name="task" id="task" value="discard">
+                  <button class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
+                  </form>
               </span>
             </span>
           </div>
+          <br>
+          {% endif %}
           
-         
+          {% endfor %}
 
         </div>
       </div>
