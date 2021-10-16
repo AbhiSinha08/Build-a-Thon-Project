@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body onload="loadNotis()">
+    <h1>{{ id }}</h1>
+    <div id="texts">
+        texts: &nbsp;
+    </div>
+
+
+    <script>
+        function show(data) {
+            let noti = " ";
+            if (data.type == "rwd") {
+                noti = 
+                    `<div> content:` + data.content + `\ntype: `
+                        + `reward` + `</div>`;                    
+            }
+            else if (data.type == "rmd") {
+                noti = 
+                    `<div> content:` + data.content + `\ntype: `
+                        + `remind` + `</div>`; 
+            }
+            else if (data.type == "alr") {
+                noti = 
+                    `<div> content:` + data.content + `\ntype: `
+                        + `alert` + `</div>`; 
+            }
+            document.getElementById("texts").innerHTML += noti;
+        }
+
+        async function getapi(url) {
+            const response = await fetch(url);
+            var data = await response.json();
+            console.log(data);
+            if (data.type != "NULL") {
+                show(data);
+                var img = '../static/notification.png';
+                var text = data.content;
+                var notification = new Notification('Notification', { body: text, icon: img });
+            }
+        }
+
+        function loadNotis() {
+            askNotificationPermission()
+            setInterval(() => {
+                getapi("http://127.0.0.1:5000/listen/{{ id }}")
+            }, 2500)
+        }
+
+
+
+        function checkNotificationPromise() {
+            try {
+              Notification.requestPermission().then();
+            } catch(e) {
+              return false;
+            }
+        
+            return true;
+          }
+        
+        function askNotificationPermission() {
+            // function to actually ask the permissions
+            function handlePermission(permission) {
+              // set the button to shown or hidden, depending on what the user answers
+              ;
+            }
+          
+            // Let's check if the browser supports notifications
+            if (!('Notification' in window)) {
+              console.log("This browser does not support notifications.");
+            } else {
+              if(checkNotificationPromise()) {
+                Notification.requestPermission()
+                .then((permission) => {
+                  handlePermission(permission);
+                })
+              } else {
+                Notification.requestPermission(function(permission) {
+                  handlePermission(permission);
+                });
+              }
+            }
+          }
+          
+    </script>
+</body>
+
+</html>
