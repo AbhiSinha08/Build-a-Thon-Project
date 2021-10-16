@@ -12,38 +12,38 @@
     <link rel="stylesheet" href="../static/styles1.css">
 </head>
 <!-- <body class="w-full h-full bg-cover bg-no-repeat " style="background-image: url('/public/image/homeback.jpg');"> -->
-<body class="bg-gradient-to-r from-gray-800 via-gray-900 to-black ">
-    <h1 class=" text-4xl text-center py-6 text-c5 font-extrabold font-sans shadow-2xl bg-gradient-to-r from-blue-300 via-blue-500 to-black">Home - Notification Engine</h1>
-    <div class="flex justify-around p-4">
-        <span class="">
+<body class="w-full h-full bg-no-repeat bg-cover" style="background-image: url(../static/img5.jpg);">
+    <h1 class=" text-4xl text-center py-6 text-black font-extrabold font-sans shadow-2xl ">Home - Notification Engine</h1>
+    <div class="flex justify-evenly p-4">
+        <span class=" ">
             <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
                 <!--Card 1-->
-                <div class=" p-8 rounded overflow-auto drop-shadow-2xl bg-blue-300 mx-8">
+                <div class=" p-16 rounded overflow-auto drop-shadow-2xl bg-purple-900 mx-8">
                   <!-- <img class="w-full" src="/mountain.jpg" alt="Mountain"> -->
                   <div class="px-6 py-4 text-center">
-                    <div class="font-bold text-xl inline-block bg-c4 rounded-xl px-6 py-2  text-blue-300 mr-2 mb-2">Log in as employee </div>
+                    <div class="font-bold text-2xl inline-block bg-c4 rounded-xl px-6 py-2  text-white mr-2 mb-2">Log in as employee </div>
                     <p class="text-c4 text-base">
                       <br>
                       <form action="/user" method="post">
-                        <span class="font-sans font-bold">Employee id</span><br><br>
+                        <span class="font-sans font-bold text-white text-xl">Employee id</span><br><br>
                         <input type="text" name="eid" id="eid" class="p-1">
                         <br><br>
-                        <button class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-700 rounded-full px-4 py-2 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit"> Log In </button>
+                        <button class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-700 rounded-full px-4 py-2 text-lg font-semibold text-white mr-2 mb-2" type="submit"> Log In </button>
                       </form>
                   </div>
                 </div>
                 <!--Card 2-->
-                <div class=" p-8 rounded overflow-auto drop-shadow-2xl bg-blue-500 mx-8">
+                <div class=" p-16 rounded overflow-auto drop-shadow-2xl bg-blue-900 mx-8">
                     <!-- <img class="w-full" src="/mountain.jpg" alt="Mountain"> -->
                     <div class="px-6 py-4 text-center">
-                      <div class="font-bold text-xl inline-block bg-c4 rounded-xl px-6 py-2  text-blue-400 mr-2 mb-2"> Admin portal </div>
+                      <div class="font-bold text-2xl inline-block bg-gray-900 rounded-xl px-6 py-2  text-white mr-2 mb-2"> Admin portal </div>
                       <p class="text-c4 text-base">
                         <br>
                         <form action="/adminportal" method= "post">
-                          <span class="font-sans font-bold">Admin password</span><br><br>
+                          <span class="font-sans font-bold text-white text-xl">Admin password</span><br><br>
                           <input type="password" name="password" id="password" class="p-1">
                           <br><br>
-                          <button class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-800 rounded-full px-4 py-2 text-lg font-semibold text-blue-300 mr-2 mb-2" type="submit"> Log In </button>
+                          <button class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-800 rounded-full px-4 py-2 text-lg font-semibold text-white mr-2 mb-2" type="submit"> Log In </button>
                         </form>                    
                       </div>
                     <div class="px-6 pt-4 pb-2 text-center">
@@ -51,9 +51,9 @@
                     </div>
                 </div>
               </div>
-            <br>
+            
     </div>
-    <span class="flex justify-center text-blue-300 py-3 text-xl font-semibold">
+    <span class="flex justify-center text-blue-900 py-3 text-xl font-semibold">
       {% if reg %}
         {{ reg }}
       {% endif %}
