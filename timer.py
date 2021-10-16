@@ -1,6 +1,9 @@
 import time
 import datetime
 
+def sleep(x):
+    time.sleep(x)
+
 def notifDate(date, month, year, before):
     event = datetime.date(year, month, date)
     d = datetime.timedelta(days=before)

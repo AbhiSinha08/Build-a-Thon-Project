@@ -1,65 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#1e2327">
-    <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#1e2327">
+  <meta name="color-scheme" content="light" />
 
-    <title>Home - Notification Engine</title>
-    <link rel="stylesheet" href="../static/styles1.css">
+  <title>Home - Notification Engine</title>
+  <link rel="stylesheet" href="../static/styles1.css">
 </head>
-<!-- <body class="w-full h-full bg-cover bg-no-repeat " style="background-image: url('/public/image/homeback.jpg');"> -->
+
+
 <body class="w-full h-full bg-no-repeat bg-cover" style="background-image: url(../static/img5.jpg);">
-    <h1 class=" text-4xl text-center py-6 text-black font-extrabold font-sans shadow-2xl ">Home - Notification Engine</h1>
-    <div class="flex justify-evenly p-4">
-        <span class=" ">
-            <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
-                <!--Card 1-->
-                <div class=" p-16 rounded overflow-auto drop-shadow-2xl bg-purple-900 mx-8">
-                  <!-- <img class="w-full" src="/mountain.jpg" alt="Mountain"> -->
-                  <div class="px-6 py-4 text-center">
-                    <div class="font-bold text-2xl inline-block bg-c4 rounded-xl px-6 py-2  text-white mr-2 mb-2">Log in as employee </div>
-                    <p class="text-c4 text-base">
-                      <br>
-                      <form action="/user" method="post">
-                        <span class="font-sans font-bold text-white text-xl">Employee id</span><br><br>
-                        <input type="text" name="eid" id="eid" class="p-1">
-                        <br><br>
-                        <button class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-700 rounded-full px-4 py-2 text-lg font-semibold text-white mr-2 mb-2" type="submit"> Log In </button>
-                      </form>
-                  </div>
-                </div>
-                <!--Card 2-->
-                <div class=" p-16 rounded overflow-auto drop-shadow-2xl bg-blue-900 mx-8">
-                    <!-- <img class="w-full" src="/mountain.jpg" alt="Mountain"> -->
-                    <div class="px-6 py-4 text-center">
-                      <div class="font-bold text-2xl inline-block bg-gray-900 rounded-xl px-6 py-2  text-white mr-2 mb-2"> Admin portal </div>
-                      <p class="text-c4 text-base">
-                        <br>
-                        <form action="/adminportal" method= "post">
-                          <span class="font-sans font-bold text-white text-xl">Admin password</span><br><br>
-                          <input type="password" name="password" id="password" class="p-1">
-                          <br><br>
-                          <button class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-800 rounded-full px-4 py-2 text-lg font-semibold text-white mr-2 mb-2" type="submit"> Log In </button>
-                        </form>                    
-                      </div>
-                    <div class="px-6 pt-4 pb-2 text-center">
-                      
-                    </div>
-                </div>
-              </div>
-            
-    </div>
-    <span class="flex justify-center text-blue-900 py-3 text-xl font-semibold">
-      {% if reg %}
-        {{ reg }}
-      {% endif %}
+  <h1 class=" text-4xl text-center py-6 text-gray-800 font-extrabold font-sans shadow-2xl ">Home - Notification Engine</h1>
+  <div class="flex justify-evenly p-4">
+    <span class=" ">
+      <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+        <!--Card 1-->
+        <div class=" p-16 rounded-2xl overflow-auto drop-shadow-2xl bg-purple-800 mx-8 transform hover:scale-110 transition ease-in duration-200">
+          <div class="px-6 py-4 text-center">
+            <div class="font-bold text-2xl inline-block bg-gray-900 rounded-xl px-6 py-2  text-white mr-2 mb-2">Log in as
+              employee </div>
+            <p class="text-c4 text-base">
+              <br>
+            <form action="/user" method="post">
+              <span class="font-sans font-bold text-white text-xl">Employee id</span><br><br>
+              <input type="text" name="eid" id="eid" class="p-1">
+              <br><br>
+              <button
+                class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-900 rounded-full px-4 py-2 text-lg font-semibold text-white mr-2 mb-2"
+                type="submit"> Log In </button>
+            </form>
+          </div>
+        </div>
+        <!--Card 2-->
+        <div class=" p-16 rounded-2xl overflow-auto drop-shadow-2xl bg-blue-800 mx-8 transform transition ease-in duration-200 hover:scale-110">
+          <div class="px-6 py-4 text-center">
+            <div class="font-bold text-2xl inline-block bg-gray-900 rounded-xl px-6 py-2  text-white mr-2 mb-2"> Admin
+              portal </div>
+            <p class="text-c4 text-base">
+              <br>
+            <form action="/adminportal" method="post">
+              <span class="font-sans font-bold text-white text-xl">Admin password</span><br><br>
+              <input type="password" name="password" id="password" class="p-1">
+              <br><br>
+              <button
+                class="inline-block hover:bg-white hover:text-black hover:border-opacity-50  hover:border-black bg-gray-900 rounded-full px-4 py-2 text-lg font-semibold text-white mr-2 mb-2"
+                type="submit"> Log In </button>
+            </form>
+          </div>
+          <div class="px-6 pt-4 pb-2 text-center">
+
+          </div>
+        </div>
+      </div>
+
+  </div>
+  <span class="flex justify-center text-blue-900 py-3 text-xl font-semibold">
+    {% if reg %}
+    {{ reg }}
+    {% endif %}
   </span>
-    <a href="/signup" class="flex justify-center">
-      <button class=" hover:bg-black hover:text-blue-400 px-36 p-5 bg-white rounded-full text-center font-bold font-sans text-xl  focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent ">Employee sign up</button>
-    </a>
+  <a href="/signup" class="flex justify-center">
+    <button
+      class=" hover:bg-gray-800 text-gray-800 hover:text-blue-400 px-36 p-5 bg-white rounded-full text-center font-bold font-sans text-xl  focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent ">Employee
+      sign up</button>
+  </a>
 </body>
+
 </html>

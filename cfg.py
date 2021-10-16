@@ -17,6 +17,12 @@ SMTP_SERVER = cfg['mail bot']['smtp_server']
 SMTP_PORT = int(cfg['mail bot']['port'])
 SUBJECT = cfg['mail bot']['subject']
 
+WA_OPTION = cfg['whatsapp']['enable'].upper()
+if WA_OPTION == "YES" or WA_OPTION == "Y":
+    WA_OPTION = True
+else:
+    WA_OPTION = False
+
 API = cfg['sms bot']['API']
 
 
@@ -30,10 +36,10 @@ SCORE_DAY_LEV1 = cfg['Score Based']['Below_Minimum']
 SCORE_DAY_LEV2 = cfg['Score Based']['Below_Optimal']
 SCORE_DAY_LEV3 = cfg['Score Based']['Above_Optimal']
 
-SCORE_WEEK_LEV1 = SCORE_DAY_LEV1.replace("today", "this week")
-SCORE_WEEK_LEV2 = SCORE_DAY_LEV2.replace("today", "this week")
-SCORE_WEEK_LEV3 = SCORE_DAY_LEV3.replace("today", "this week")
+SCORE_WEEK_LEV1 = SCORE_DAY_LEV1.replace("yesterday", "last week")
+SCORE_WEEK_LEV2 = SCORE_DAY_LEV2.replace("yesterday", "last week")
+SCORE_WEEK_LEV3 = SCORE_DAY_LEV3.replace("yesterday", "last week")
 
-SCORE_MONTH_LEV1 = SCORE_DAY_LEV1.replace("today", "this month")
-SCORE_MONTH_LEV2 = SCORE_DAY_LEV2.replace("today", "this month")
-SCORE_MONTH_LEV3 = SCORE_DAY_LEV3.replace("today", "this month")
+SCORE_MONTH_LEV1 = SCORE_DAY_LEV1.replace("yesterday", "last month")
+SCORE_MONTH_LEV2 = SCORE_DAY_LEV2.replace("yesterday", "last month")
+SCORE_MONTH_LEV3 = SCORE_DAY_LEV3.replace("yesterday", "last month")

@@ -20,14 +20,14 @@
             <h1 class="
               text-4xl
               px-12
-              py-6
+              py-4
               text-blue-900
               font-extrabold font-sans
               shadow-2xl flex justify-between
             ">
                 <span>Employee Window</span>
                 <div>
-                <button class="text-2xl text-gray-700 font-bold bg-red-400 hover:bg-red-500 px-3 py-1 mr-12 rounded-md"><a href="/">HOME</a></button>
+                <button class="text-2xl text-white font-bold transform transition ease-in duration-200 hover:-rotate-6 transition hover:scale-105 bg-blue-800 hover:bg-blue-900 px-4 py-2 mr-12 rounded-md"><a href="/">HOME</a></button>
                 <span class="font-bold text-xl"> Employee ID: {{ eid }}</span>
                 </div>
             </h1>
@@ -118,7 +118,7 @@
                 </div>
             </div>
 
-            <div class="bg-blue-300 rounded-3xl p-5 shadow-2xl font-sans border-4 border-purple-600" id="notifications">
+            <div class="bg-blue-300 rounded-3xl p-5 shadow-2xl font-sans border-4 border-blue-800" id="notifications">
                 <h1 class="font-bold text-center text-xl">New Notifications</h1><br>
 
             </div>
@@ -127,113 +127,11 @@
     </div>
 
     <script>
-        function show(data) {
-            let noti = " ";
-            if (data.type == "rwd") {
-                noti = 
-                    `<div class="bg-white rounded-3xl p-5 border-4 border-green-600 shadow-2xl font-sans flex flex-col-2">
-                        <svg class="h-10 w-10 fill-current text-green-600" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z"
-                                clip-rule="evenodd" />
-                            <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
-                        </svg>
-                        <span class="pl-3">
-                            <h4 class=" text-green-600 font-bold">`
-                    + data.content +
-                             `</h4>
-                         </span>
-                     </div><br>`;
+        const url = "http://127.0.0.1:5000/listen/{{ eid }}";
+    </script>
 
-            }
-            else if (data.type == "rmd") {
-                noti = 
-                    `<div class="bg-white rounded-3xl p-5 border-4 border-yellow-400 shadow-2xl font-sans flex flex-col-2">
-                        <svg class="h-10 w-10 fill-current text-yellow-400" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <span class="pl-3">
-                            <h4 class="text-yellow-400 font-bold">`
-                    + data.content +
-                            `</h4>
-                        </span>
-                    </div><br>`; 
-            }
-            else if (data.type == "alr") {
-                noti = 
-                    `<div class="bg-white rounded-3xl p-5 border-4 border-red-500 shadow-2xl font-sans flex flex-col-2">
-                        <svg class="h-10 w-10 fill-current text-red-500" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <span class="pl-3">
-                            <h4 class="text-red-500 font-bold">`
-                    + data.content +
-                            `</h4>
-                        </span>
-                    </div><br>`; 
-            }
-            document.getElementById("notifications").innerHTML += noti;
-        }
-
-        async function getapi(url) {
-            const response = await fetch(url);
-            var data = await response.json();
-            console.log(data);
-            if (data.type != "NULL") {
-                show(data);
-                var img = '../static/notification.png';
-                var text = data.content;
-                var notification = new Notification('Notification', { body: text, icon: img });
-            }
-        }
-
-        function loadNotis() {
-            askNotificationPermission()
-            setInterval(() => {
-                getapi("http://127.0.0.1:5000/listen/{{ eid }}")
-            }, 2500)
-        }
-
-        function checkNotificationPromise() {
-            try {
-              Notification.requestPermission().then();
-            } catch(e) {
-              return false;
-            }
+    <script src="../static/employee.js">
         
-            return true;
-          }
-        
-        function askNotificationPermission() {
-            // function to actually ask the permissions
-            function handlePermission(permission) {
-              // set the button to shown or hidden, depending on what the user answers
-              ;
-            }
-          
-            // Let's check if the browser supports notifications
-            if (!('Notification' in window)) {
-              console.log("This browser does not support notifications.");
-            } else {
-              if(checkNotificationPromise()) {
-                Notification.requestPermission()
-                .then((permission) => {
-                  handlePermission(permission);
-                })
-              } else {
-                Notification.requestPermission(function(permission) {
-                  handlePermission(permission);
-                });
-              }
-            }
-          }
     </script>
 
 </body>

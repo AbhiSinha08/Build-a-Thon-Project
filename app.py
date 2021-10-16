@@ -1,20 +1,30 @@
 from flask import Flask, render_template, request, redirect, url_for
-import db
 import threading
+from collections import defaultdict
+import json
+import db
 import timer
 import bots.mail
-import bots.sms
+if db.WA_OPTION:
+    import bots.whatsapp
 
-def notifyThread(email, phone, content, type, sub):
+queue = defaultdict(lambda: [])
+
+def notifyThread(email, phone, content, type, eid, sub):
+    queue[eid].append({
+                'type': type,
+                'content': content
+    })
     bots.mail.sendMail(email, sub, content)
-    bots.sms.sendMsg(phone, content)
+    if db.WA_OPTION:
+        bots.whatsapp.sendMsg(phone, content)
 
-def notify(email, phone, content, type, sub=db.SUBJECT):
+def notify(email, phone, content, type, eid, sub=db.SUBJECT):
     if type == "":
         type = "rmd"
     threading.Thread(target=notifyThread,
                     daemon=True,
-                    args=(email, phone, content, type, sub)).start()
+                    args=(email, phone, content, type, eid, sub)).start()
 
 
 
@@ -28,14 +38,14 @@ def dayThread():
         _, minn, opt = notification[4].split()
         users = db.getUsers()
         for user in users:
-            email, phone = user[1], user[2]
+            email, phone, eid = user[1], user[2], int(user[6])
             score = user[3]
             if score < int(minn):
-                notify(email, phone, db.SCORE_DAY_LEV1, 'alr')
+                notify(email, phone, db.SCORE_DAY_LEV1, 'alr', eid)
             elif score < int(opt):
-                notify(email, phone, db.SCORE_DAY_LEV2, 'rmd')
+                notify(email, phone, db.SCORE_DAY_LEV2, 'rmd', eid)
             else:
-                notify(email, phone, db.SCORE_DAY_LEV3, 'rwd')
+                notify(email, phone, db.SCORE_DAY_LEV3, 'rwd', eid)
         db.resetScore()
 
         notifications = db.pending(trig="DT")
@@ -47,10 +57,10 @@ def dayThread():
                 content = notification[1]
                 id = notification[0]
                 for user in users:
-                    email, phone = user[1], user[2]
-                    notify(email, phone, content, "rmd")
+                    email, phone, eid = user[1], user[2], int(user[6])
+                    notify(email, phone, content, "rmd", eid)
                 db.delete(id)
-        timer.time.sleep(2)
+        timer.sleep(2)
 
 def weekThread():
     while True:
@@ -61,16 +71,16 @@ def weekThread():
             return
         _, minn, opt = notification[4].split()
         for user in db.getUsers():
-            email, phone = user[1], user[2]
+            email, phone, eid = user[1], user[2], int(user[6])
             score = user[4]
             if score < int(minn):
-                notify(email, phone, db.SCORE_WEEK_LEV1, 'alr')
+                notify(email, phone, db.SCORE_WEEK_LEV1, 'alr', eid)
             elif score < int(opt):
-                notify(email, phone, db.SCORE_WEEK_LEV2, 'rmd')
+                notify(email, phone, db.SCORE_WEEK_LEV2, 'rmd', eid)
             else:
-                notify(email, phone, db.SCORE_WEEK_LEV3, 'rwd')
+                notify(email, phone, db.SCORE_WEEK_LEV3, 'rwd', eid)
         db.resetScore(week=True)
-        timer.time.sleep(2)
+        timer.sleep(2)
 
 def monthThread():
     while True:
@@ -81,16 +91,16 @@ def monthThread():
             return
         _, minn, opt = notification[4].split()
         for user in db.getUsers():
-            email, phone = user[1], user[2]
+            email, phone, eid = user[1], user[2], int(user[6])
             score = user[5]
             if score < int(minn):
-                notify(email, phone, db.SCORE_MONTH_LEV1, 'alr')
+                notify(email, phone, db.SCORE_MONTH_LEV1, 'alr', eid)
             elif score < int(opt):
-                notify(email, phone, db.SCORE_MONTH_LEV2, 'rmd')
+                notify(email, phone, db.SCORE_MONTH_LEV2, 'rmd', eid)
             else:
-                notify(email, phone, db.SCORE_MONTH_LEV3, 'rwd')
+                notify(email, phone, db.SCORE_MONTH_LEV3, 'rwd', eid)
         db.resetScore(month=True)
-        timer.time.sleep(2)
+        timer.sleep(2)
 
 
 
@@ -108,11 +118,11 @@ def MonthlyAchievementNotif(eid, percent):
     email, phone = user[1], user[2]
     _, minn, opt = notification[4].split()
     if percent < int(minn):
-        notify(email, phone, db.ACHIEVE_LEV1, 'alr')
+        notify(email, phone, db.ACHIEVE_LEV1, 'alr', eid)
     elif percent < int(opt):
-        notify(email, phone, db.ACHIEVE_LEV2, 'rmd')
+        notify(email, phone, db.ACHIEVE_LEV2, 'rmd', eid)
     else:
-        notify(email, phone, db.ACHIEVE_LEV3, 'rwd')
+        notify(email, phone, db.ACHIEVE_LEV3, 'rwd', eid)
 
 def timeNotif(hr, mn, freq, content, id, type='rmd', eid=False):
     while freq > 0:
@@ -120,29 +130,29 @@ def timeNotif(hr, mn, freq, content, id, type='rmd', eid=False):
         if eid:
             user = db.getUsers(eid)[0]
             email, phone = user[1], user[2]
-            notify(email, phone, content, type)
+            notify(email, phone, content, type, eid)
         else:
             for user in db.getUsers():
-                email, phone = user[1], user[2]
-                notify(email, phone, content, type)
+                email, phone, eid = user[1], user[2], int(user[6])
+                notify(email, phone, content, type, eid)
 
         newTrig = f"TM {hr} {mn} {freq-1}"
         db.changeTrigger(id, newTrig)
         freq -= 1
-        timer.time.sleep(2)
+        timer.sleep(2)
     db.delete(id)
 
 def rolesNotif(content, roles, type='rmd'):
     users = db.getUsers()
     for user in users:
         if user[0] in roles:
-            email, phone = user[1], user[2]
-            notify(email, phone, content, type)
+            email, phone, eid = user[1], user[2], int(user[6])
+            notify(email, phone, content, type, eid)
 
 def notifyAll(content, type):
     for user in db.getUsers():
-        email, phone = user[1], user[2]
-        notify(email, phone, content, type)
+        email, phone, eid = user[1], user[2], int(user[6])
+        notify(email, phone, content, type, eid)
 
 notifications = db.pending(trig="TM")
 for notification in notifications:
@@ -183,6 +193,15 @@ def index():
 @app.route('/signup')
 def signup():
     return render_template("signup.html")
+
+@app.route('/listen/<int:eid>')
+def listen(eid):
+    notifications = queue[eid]
+    if notifications:
+        notification = notifications[0]
+        del notifications[0]
+        return json.dumps(notification)
+    return json.dumps({'type': 'NULL'})
 
 @app.route('/user', methods=['POST'])
 def user():
@@ -227,7 +246,11 @@ def suggest():
 @app.route('/adminportal', methods=['POST'])
 def admin():
     if request.form['password'] == db.ADMIN_PW:
-        suggestions = db.pending(table="suggestions")
+        try:
+            suggestions = db.pending(table="suggestions")
+        except:
+            timer.sleep(0.5)
+            suggestions = db.pending(table="suggestions")
         return render_template("admin.html", pw=db.ADMIN_PW, suggestions=suggestions)
     return render_template("index.html", reg="Wrong Password")
 
@@ -243,6 +266,7 @@ def handleSuggestion():
         threading.Thread(target=notifyAll,
                         daemon=True,
                         args=(content, type)).start()
+        timer.sleep(0.1)
     elif task == 'discard':
         db.delete(id, table="suggestions")
     return redirect(url_for("admin"), code=307)
@@ -329,6 +353,7 @@ def create(type):
         threading.Thread(target=timeNotif,
                         daemon=True,
                         args=(hr, mn, noOfDays, content, id, notitype)).start()
+        timer.sleep(0.1)
 
     elif type == 'event':
         content = request.form['content']
@@ -352,15 +377,11 @@ def create(type):
         threading.Thread(target=rolesNotif,
                         daemon=True,
                         args=(content, roles, notitype)).start()
+        timer.sleep(0.1)
 
         
 
     return redirect(url_for("admin"), code=307)
-
-@app.route('/adminportal/create', methods=['GET','POST'])
-def foo():
-    return redirect(url_for("index"))
-
 
 
 if __name__ == '__main__':

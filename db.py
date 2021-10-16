@@ -155,7 +155,7 @@ def getUsers(eid=False):
         sql = f"""SELECT grp, email, phone, score_d, score_w, score_m
                 FROM users WHERE eid = {eid}"""
     else:
-        sql = "SELECT grp, email, phone, score_d, score_w, score_m FROM users"
+        sql = "SELECT grp, email, phone, score_d, score_w, score_m, eid FROM users"
     cur = conn.cursor(buffered=True)
     cur.execute(sql)
     result = cur.fetchall()
