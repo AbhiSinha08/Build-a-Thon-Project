@@ -1,0 +1,7 @@
+// send json data to localhost:5000/api with POST method
+
+{
+    "Header": "Monthly Achievement", // The type of data to be fed
+    "Employee_id": 123456, // For whom monthly achievement is to be added
+    "Achievement %": 75 //Monthly achievement % to be added
+}

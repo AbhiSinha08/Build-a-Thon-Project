@@ -1,117 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="theme-color" content="#1e2327">
     <meta name="color-scheme" content="light" />
-    
-    <title>Signup - Notification Engine</title>
+    <title> Signup - NotiSmart </title>
     <link rel="stylesheet" href="../static/styles.css">
-
+    <link rel="icon" href="../static/notification.png">
 </head>
+
 <body>
     <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-700 to to-black">
         <div class="px-10 py-4 mt-4 text-left bg-white shadow-2xl rounded">
-            <h3 class="text-2xl font-bold text-center">Employee sign up</h3>
+            <h3 class="text-2xl font-bold text-center"> Employee sign up </h3>
+
+            <!-- If Wrong details entered -->
+            {% if var %}
+                <br>
+                <p class="text-xl font-semibold text-center text-red-500"> {{ var }} </p>
+            {% endif %}
+
+            <!-- Signup Form -->
             <form action="/" method="post">
                 <div class="mt-4 ">
                     <div>
-                        <label class="block" for="name" >Name<label>
-                            <input type="text" placeholder="Employee name" name="name" id="name"
-                                class="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
-                        <label class="block" for="id">Employee id<label>
-                            <input type="text" placeholder="Your 6 digit Employee id" name="eid" id="eid"
-                                class="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
+
+                        <!-- Input for Name -->
+                        <label class="block" for="name"> Name <label>
+                            <input type="text" placeholder="Employee name" name="name" id="name" class="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
                         
-                        <label class="block" for="age">Age<label>
-                            <input type="text" placeholder="Employee Age" name="age" id="age"
-                                class="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">    
+                        <!-- Input for Employee ID -->
+                        <label class="block" for="id"> Employee id <label>
+                            <input type="text" placeholder="Your 6 digit Employee id" name="eid" id="eid" class="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
+                        
+                        <!-- Input for Age -->
+                        <label class="block" for="age"> Age <label>
+                            <input type="text" placeholder="Employee Age" name="age" id="age" class="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">    
+                        
+                        <!-- Radio Button for selecting Gender -->
                         <div class="block text-black ">
-                            <span class="">Sex:  &nbsp; &nbsp;</span>
-                                <span>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="sex" value="F" >
-                                        <span class="ml-2 mr-4">Female</span>
-                                      </label>
-        
-                                      <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="sex" value="M">
-                                        <span class="ml-2 mr-4">Male</span>
-                                      </label>
-                                    
-                                      <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="sex" value="O">
-                                        <span class="ml-2">Others</span>
-                                      </label>
-                                </span>
-                        </div>
-                        <br>              
-                        <label class="block" for="email">Contact Details<label>
+                            <span class=""> Sex:  &nbsp; &nbsp; </span>
+                            <span>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio" name="sex" value="F" >
+                                    <span class="ml-2 mr-4"> Female </span>
+                                </label>
+                                
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio" name="sex" value="M">
+                                    <span class="ml-2 mr-4"> Male </span>
+                                </label>
+                                
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio" name="sex" value="O">
+                                    <span class="ml-2"> Others </span>
+                                </label>
+                            </span>
+                        </div><br>
+
+                        <!-- Input for email and phone number -->
+                        <label class="block" for="email"> Contact Details <label>
                             <input type="text" placeholder="Email" name="email" id="email"
                                 class="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
                             <input type="text" placeholder="Phone number" name="phone" id="phone"
                                 class="w-full px-4 py-2 mb-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
-                               
-
                         
+                        <!-- Radio Buttons for selecting Position -->
                         <div class="block text-black ">
-                            <span class="">Position: &nbsp; &nbsp; </span>
-                                <span>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="group" value="CEO" >
-                                        <span class="ml-2 mr-4">CEO</span>
-                                      </label>
-        
-                                      <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="group" value="TML">
-                                        <span class="ml-2 mr-4">Team leader</span>
-                                      </label>
-                                    
-                                      <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="group" value="MNG">
-                                        <span class="ml-2 mr-4">Manager</span>
-                                      </label>
-                                      <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="group" value="STF">
-                                        <span class="ml-2 mr-4">Staff</span>
-                                      </label>
-                                </span>
+                            <span class=""> Position: &nbsp; &nbsp; </span>
+                            <span>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio" name="group" value="CEO" >
+                                    <span class="ml-2 mr-4"> CEO </span>
+                                </label>
+    
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio" name="group" value="TML">
+                                    <span class="ml-2 mr-4"> Team leader </span>
+                                </label>
+                                
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio" name="group" value="MNG">
+                                    <span class="ml-2 mr-4"> Manager </span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio" name="group" value="STF">
+                                    <span class="ml-2 mr-4"> Staff </span>
+                                </label>
+                            </span>
                         </div>
-                        <!-- <div class="block text-black ">
-                            <span class="">Branch &nbsp &nbsp &nbsp</span>
-                                <span>
-                                    <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="radio3" value="31" >
-                                        <span class="ml-2">Sales</span>
-                                      </label>
-        
-                                      <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="radio3" value="32">
-                                        <span class="ml-2">Marketing</span>
-                                      </label>
-                                    
-                                      <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="radio3" value="33">
-                                        <span class="ml-2">IT</span>
-                                      </label>
-                                      <label class="inline-flex items-center">
-                                        <input type="radio" class="form-radio" name="radio3" value="33">
-                                        <span class="ml-2">HR</span>
-                                      </label>
-                                </span>
-                        </div> -->
                     </div>
-                    <!-- <div class="mt-4">
-                        <label class="block">Password<label>
-                                <input type="password" placeholder="Password"
-                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
-                    </div> -->
+
+                    <!-- Sign up button -->
                     <div class="flex items-baseline justify-around">
                         <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Sign up</button>
-                        <!-- <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a> -->
                     </div>
                 </div>
             </form>

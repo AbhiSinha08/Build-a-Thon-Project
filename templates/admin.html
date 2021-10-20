@@ -1,127 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <meta name="theme-color" content="#1e2327">
   <meta name="color-scheme" content="light" />
-
-  <title>Admin Portal - Notification Engine</title>
+  <title> Admin Portal - NotiSmart </title>
   <link rel="stylesheet" href="../static/styles.css" />
+  <link rel="icon" href="../static/notification.png">
 </head>
 
-<body>
+<body onload="main()">
   <div class="min-h-screen bg-gradient-to-r from-blue-700 to-indigo-900">
+
+    <!-- Top Panel -->
     <div class="shadow-2xl">
-      <h1 class="
-            text-4xl
-            px-12
-            py-6
-            text-blue-100
-            font-extrabold font-sans
-            shadow-2xl flex justify-between
-          ">
-        <span>Admin Portal</span>
+      <h1 class="text-4xl px-12 py-6 text-blue-100 font-bold font-sans shadow-2xl flex justify-between">
+        <span> Admin Portal </span>
+        
+        <!-- Home Button -->
         <button class="text-2xl text-white font-bold transform transition ease-in duration-200 hover:-rotate-6 hover:scale-105 bg-blue-500 hover:bg-blue-600 px-4 mr-4 py-2 rounded-md"><a href="/">HOME</a></button>
       </h1>
     </div>
     <div class="grid md:grid-cols-3 gap-5 p-5 ">
+      
+      <!-- Section to create new notification -->
       <div class="col-span-2 ">
         <div class="bg-blue-200 rounded-3xl p-5 font-sans text-blue-900">
-          <p class="font-bold text-center text-2xl">Create new notification</p>
+          <p class="font-bold text-center text-2xl"> Create new notification </p>
+          
+          <!-- Buttons to select notification categories -->
           <div class="flex justify-around p-3 px-3 mt-10 gap-5">
             <button class="bg-blue-500 text-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="score">
-              Score based Notification
-            </button>
+              Score based Notification </button>
             <button class="bg-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="status">
-              User Status
-            </button>
+              User Status </button>
             <button class="bg-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="time">
-              Scheduled time Notification
-            </button>
+              Scheduled time Notification </button>
             <button class="bg-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="event">
-              Event Notification
-            </button>
+              Event Notification </button>
             <button class="bg-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="role">
-              Group Notify
-            </button>
+              Group Notify </button>
           </div><br><br>
           <div>
+            
+            <!-- Section for creating Score based notifications -->
             <div class="block1">
               <div class="grid grid-cols-2 gap-20">
                 <span>
+                  
+                  <!-- Form for defining min and optimum transaction scores
+                  on a daily, weekly or monthly basis -->
                   <form action="/adminportal/create/score" method="post">
+                    
+                    <!-- Radio buttons for chosing basis -->
                     <div class="block">
                       <span class="flex justify-around">
                         <span>
                           <label class="inline-flex items-center">
                             <input type="radio" class="form-radio" name="freq" value="daily">
-                            <span class="ml-2">Daily</span>
+                            <span class="ml-2"> Daily </span>
                           </label>
                         </span>
                         <span>
                           <label class="inline-flex items-center">
                             <input type="radio" class="form-radio" name="freq" value="weekly">
-                            <span class="ml-2">Weekly</span>
+                            <span class="ml-2"> Weekly </span>
                           </label>
                         </span>
                         <span>
                           <label class="inline-flex items-center">
                             <input type="radio" class="form-radio" name="freq" value="monthly">
-                            <span class="ml-2">Monthly</span>
+                            <span class="ml-2"> Monthly </span>
                           </label>
                         </span>
                       </span>
                     </div><br>
-                    <h3>Set Minimal Transaction Score</h3>
-                    <input type="text" name="minscore" id="minscore" class="w-full
-                  px-4 py-2 mt-2 border rounded-md focus:outline-none
-                  focus:ring-1 focus:ring-blue-700">
-                  <h3>Set Optimal Transaction Score</h3>
-                  <input type=" text" name="optscore" id="optscore" class="w-full
-                  px-4 py-2 mt-2 border rounded-md focus:outline-none
-                  focus:ring-1 focus:ring-blue-700">
-                  <input type= "hidden" name="password" id="password" value="{{ pw }}">
+                  
+                    <!-- Input fields for taking defined scores -->
+                    <h3> Set Minimal Transaction Score </h3>
+                    <input type="text" name="minscore" id="minscore" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
+                    <h3> Set Optimal Transaction Score </h3>
+                    <input type=" text" name="optscore" id="optscore" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
+                  
+                    <!-- Auto-generated value for authenticating admin -->
+                    <input type= "hidden" name="password" id="password" value="{{ pw }}">
                     <div class=" flex items-baseline justify-around">
-                      <button type="submit"
-                        class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Create</button>
-
+                  
+                      <!-- Submit Button -->
+                      <button type="submit" class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900"> Create </button>
                     </div>
                   </form>
                 </span>
                 <span>
+                
+                  <!-- Form for defining minimum and optimum
+                  monthly achievement of employees -->
                   <form action="/adminportal/create/monthachievement" method="post">
-                    <h3>Set Minimum Monthly Ahievement</h3>
-                    <input type="text" name="minachieve" id="minachieve" class="w-full
-                  px-4 py-2 mt-2 border rounded-md focus:outline-none
-                  focus:ring-1 focus:ring-blue-700">
-                  <h3>Set Optimal Monthly Achievement</h3>
-                  <input type=" text" name="optachieve" id="optachieve" class="w-full
-                  px-4 py-2 mt-2 border rounded-md focus:outline-none
-                  focus:ring-1 focus:ring-blue-700">
-                  <input type= "hidden" name="password" id="password" value="{{ pw }}">
+                    <h3> Set Minimum Monthly Ahievement </h3>
+                
+                    <!-- Input fields for taking defined achievements -->
+                    <input type="text" name="minachieve" id="minachieve" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
+                    <h3> Set Optimal Monthly Achievement </h3>
+                    <input type=" text" name="optachieve" id="optachieve" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700">
+                 
+                    <!-- Auto-generated value for authenticating admin -->
+                    <input type= "hidden" name="password" id="password" value="{{ pw }}">
                     <div class=" flex items-baseline justify-around">
-                      <button type="submit"
-                        class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Create</button>
-
+                 
+                      <!-- Submit Button -->
+                      <button type="submit" class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900"> Create </button>
                     </div>
                   </form>
                 </span>
               </div>
             </div>
+
+            <!-- Section for creating notification trigger based on user's activity -->
             <div class="block2 p-5 hidden">
+
+              <!-- TODO -->
               <form action="/adminportal">
                 <div class="flex flex-col-2 gap-32">
                   <span class="flex justify-start">
-                    <h3>Set Notification Time For Activity Status &nbsp; </h3>
+                    <h3> Set Notification Time For Activity Status &nbsp; </h3>
                     <br>
                     <input type="time" name="time" id="time" class="px-12 flex justify-around" />
                   </span>
                   <span class="flex justify-end">
-                    <h3>Frequency </h3>&nbsp; &nbsp;
+                    <h3> Frequency </h3>&nbsp; &nbsp;
                     <br />
                     <input list="frequency" />
                     <datalist id="frequency">
@@ -134,257 +142,318 @@
                 </div><br><br>
                 <div class="flex items-baseline justify-around">
                   <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Create</button>
+                  <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900"> Create </button>
                 </div>
               </form>
             </div>
+
+            <!-- Section for Creating time based notifications -->
             <div class="block3 p-1 hidden">
               <form action="/adminportal/create/time" method="post">
-                <div class="block  ">
-                  <div class="block ">
+
+                <!-- Radio buttons for selecting the type of notification -->
+                <div class="block">
                     <div class="flex justify-center">
                       <span>
-                        <span class="px-2">Notification type: &nbsp; </span>
+                        <span class="px-2"> Notification type: &nbsp; </span>
                         <label class="px-4">
                           <input type="radio" class="form-radio" name="type" value="rwd">
-                          <span class="ml-1">Reward</span>
+                          <span class="ml-1"> Reward </span>
                         </label>
                       </span>
                       <span>
                         <label class="px-4">
                           <input type="radio" class="form-radio" name="type" value="rmd">
-                          <span class="ml-1">Reminder</span>
+                          <span class="ml-1"> Reminder </span>
                         </label>
                       </span>
                       <span>
                         <label class="px-4">
                           <input type="radio" class="form-radio" name="type" value="alr">
-                          <span class="ml-1">Alert</span>
+                          <span class="ml-1"> Alert </span>
                         </label>
                       </span>
-                    </div>
-                  </div><br>
+                    </div><br>
                 </div><br>
                 <div class="flex flex-col-3 gap-4 justify-center">
+
+                  <!-- Input field for setting time of notification -->
                   <span class=" flex justify-start">
-                    <h3>Set Notification Time &nbsp;</h3>
+                    <h3> Set Notification Time &nbsp; </h3>
                     <br>
                     <input type="time" name="time" id="time" class="px-12" />
                   </span>
+
+                  <!-- Checkbox to select to notify everyday -->
                   <span class="ml-12">
                     <input type="checkbox" name="check" id="check" value="on">
-                    <label for="everyday">Everyday</label>
+                    <label for="everyday"> Everyday </label>
                   </span>
-                  <span class=" flex justify-end">
 
-                    <h3>For &nbsp; </h3>
-                    <br />
+                  <!-- Input field for setting number of days -->
+                  <span class=" flex justify-end">
+                    <h3> For &nbsp; </h3>
                     <input type="text" name="freq" id="freq" class="pl-1">
-                    <h3>&nbsp; Days</h3>
+                    <h3> &nbsp; Days </h3>
                   </span>
                 </div><br><br>
+
+                <!-- Input field for notification content -->
                 <div>
-                  <h3>Detailed Notification</h3>
-                  <textarea type="text" name="content" id="content" class="w-full
-                    px-4 py-2 mt-2 border rounded-md focus:outline-none
-                    focus:ring-1 focus:ring-blue-700"></textarea>
+                  <h3> Detailed Notification </h3>
+                  <textarea type="text" name="content" id="content" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700"></textarea>
                 </div>
                 <div class="flex items-baseline justify-around">
+
+                  <!-- Auto-generated value for authenticating admin -->
                   <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Create</button>
+
+                  <!-- Submit button -->
+                  <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900"> Create </button>
                 </div>
               </form>
             </div>
+
+            <!-- Section for creating event based notificatons -->
             <div class="block4 p-5 hidden">
               <form action="/adminportal/create/event" , method="post">
                 <span class="flex flex-col-3 gap-10">
+
+                  <!-- Input field for setting date of event -->
                   <span class=" flex justify-start">
-                    <h3 class="mr-1">Set date of Event &nbsp;</h3>
+                    <h3 class="mr-1"> Set date of Event &nbsp; </h3>
                     <br>
                     <input type="date" name="date" id="date" class="px-12 h-8" /><br><br>
                   </span>
+
+                  <!-- Input field for setting days before which
+                    reminder will be sent to employees -->
                   <span class=" flex justify-end">
-                    <h3 class="mr-1">Notify before &nbsp;</h3>
+                    <h3 class="mr-1"> Notify before &nbsp; </h3>
                     <input type="text" name="days" id="days" class="h-8"><br>
-                    <h3> &nbsp;Days</h3>
+                    <h3> &nbsp;Days </h3>
                   </span>
                 </span>
+
+                <!-- Input field for Event name and description -->
                 <div>
-                  <h3>Event description </h3>
-                  <textarea type="text" name="content" id="content" class="w-full
-                        px-4 py-2 mt-2 border rounded-md focus:outline-none
-                        focus:ring-1 focus:ring-blue-700"></textarea>
+                  <h3> Event description </h3>
+                  <textarea type="text" name="content" id="content" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700"></textarea>
                 </div>
                 <div class="flex items-baseline justify-around">
+
+                  <!-- Auto-generated value for authenticating admin -->
                   <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Create</button>
+
+                  <!-- Submit Button -->
+                  <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900"> Create </button>
                 </div>
                 </span>
               </form>
             </div>
+
+            <!-- Sectoin for creating notifications only for some specific role(s) -->
             <div class="block5 p-5 hidden">
               <form action="/adminportal/create/role" method="post">
                 <div class="block ">
                   <div class="flex justify-center">
+
+                    <!-- Radio buttons for selecting the type of notification -->
                     <span>
-                      <span class="px-2">Notification type: &nbsp; </span>
+                      <span class="px-2"> Notification type: &nbsp; </span>
                       <label class="px-4">
                         <input type="radio" class="form-radio" name="type" value="rwd">
-                        <span class="ml-1">Reward</span>
+                        <span class="ml-1"> Reward </span>
                       </label>
                     </span>
                     <span>
                       <label class="px-4">
                         <input type="radio" class="form-radio" name="type" value="rmd">
-                        <span class="ml-1">Reminder</span>
+                        <span class="ml-1"> Reminder </span>
                       </label>
                     </span>
                     <span>
                       <label class="px-4">
                         <input type="radio" class="form-radio" name="type" value="alr">
-                        <span class="ml-1">Alert</span>
+                        <span class="ml-1"> Alert </span>
                       </label>
                     </span>
                   </div>
                 </div><br>
+
+                <!-- Checkboxes for selecting the group(s) to notify -->
                 <div class="flex mt-2 justify-center">
-                  <span class="mx-4">Roles to notify: &nbsp;</span>
+                  <span class="mx-4"> Roles to notify: &nbsp; </span>
                   <div class="flex">
                     <div>
                       <label class="px-4">
                         <input type="checkbox" name="roles" value="CEO" class="form-checkbox" checked>
-                        <span class="ml-1">CEO</span>
+                        <span class="ml-1"> CEO </span>
                       </label>
                     </div>
                     <div>
                       <label class="px-4">
                         <input type="checkbox" name="roles" value="MNG" class="form-checkbox">
-                        <span class="ml-1">Managers</span>
+                        <span class="ml-1"> Managers </span>
                       </label>
                     </div>
                     <div>
                       <label class="px-4">
                         <input type="checkbox" name="roles" value="STF" class="form-checkbox">
-                        <span class="ml-1">Staffs</span>
+                        <span class="ml-1"> Staffs </span>
                       </label>
                     </div>
                     <div>
                       <label class="px-4">
                         <input type="checkbox" name="roles" value="TML" class="form-checkbox" checked>
-                        <span class="ml-1">Team leaders</span>
+                        <span class="ml-1"> Team leaders </span>
                       </label>
                     </div>
                   </div>
                 </div><br>
+
+                <!-- Input field for notification content -->
                 <div>
-                  <h3>Notification description </h3>
-                  <textarea type="text" name="content" id="content" class="w-full
-                        px-4 py-2 mt-2 border rounded-md focus:outline-none
-                        focus:ring-1 focus:ring-blue-700"></textarea>
+                  <h3> Notification description </h3>
+                  <textarea type="text" name="content" id="content" class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-700"></textarea>
                 </div>
                 <div class="flex items-baseline justify-around">
+
+                  <!-- Auto-generated value for authenticating admin -->
                   <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900">Create</button>
+
+                  <!-- Submit Button -->
+                  <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900"> Create </button>
                 </div>
-                </span>
               </form>
             </div>
-
           </div>
-
         </div>
       </div>
       <div>
+
+        <!-- Notifications suggestions from users -->
         <div class="bg-blue-200 rounded-3xl p-5 shadow-2xl font-sans">
-          <h1 class="font-bold text-center pb-2">Notification suggestions</h1>
+          <h1 class="font-bold text-center pb-2"> Notification suggestions </h1>
+          
+          <!-- Refresh Suggestions button -->
+          <form action="/adminportal" method="post" class="text-center">
+            <input type="hidden" name="password" id="password" value="{{ pw }}">
+            <button class="text-sm font-semibold text-blue-600 hover:underline"> &#8635; REFRESH </button>
+          </form>
+
+          <!-- Passing all suggestions in the form of a list -->
           {% for notification in suggestions %}
+            {% if notification[2] == 'rwd' %} <!-- If the suggestion is of type 'Reward' -->
 
-          {% if notification[2] == 'rwd' %}
+              <div class="bg-white rounded-3xl p-3 border-4 border-green-600 shadow-2xl font-sans flex flex-col-2">
 
-          <div class="bg-white rounded-3xl p-3 border-4 border-green-600 shadow-2xl font-sans flex flex-col-2">
-            <svg class="h-10 w-10 fill-current text-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z"
-                clip-rule="evenodd" />
-              <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
-            </svg>
-            <span class="pl-3 w-full">
-              <h4 class=" text-green-600 font-bold mb-2">{{ notification[1] }} </h4>
-              <span class="flex justify-around mt-3">
-                <form action="/adminportal/suggestion" method="post">
-                  <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
-                  <input type="hidden" name="task" id="task" value="notify">
-                  <button class="text-sm text-blue-600 hover:underline">Notify all</a>
-                </form>
-                <form action="/adminportal/suggestion" method="post">
-                  <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
-                  <input type="hidden" name="task" id="task" value="discard">
-                  <button class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
-                </form>
-              </span>
-            </span>
-          </div>
+                <!-- SVG Icon to show -->
+                <svg class="h-10 w-10 fill-current text-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clip-rule="evenodd" />
+                  <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
+                </svg>
+                <span class="pl-3 w-full">
 
-          <br>
-          {% elif notification[2] == 'rmd' %}
-          <div class="bg-white rounded-3xl p-3 border-4 border-yellow-400 shadow-2xl font-sans flex flex-col-2">
-            <svg class="h-10 w-10 fill-current text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                clip-rule="evenodd" />
-            </svg>
-            <span class="pl-3 w-full">
-              <h4 class="text-yellow-400 font-bold">{{ notification[1] }} </h4>
-              <br>
+                  <!-- Actual notification content -->
+                  <h4 class=" text-green-600 font-bold mb-2"> {{ notification[1] }} </h4>
 
-              <span class="flex justify-around mt-3">
-                <form action="/adminportal/suggestion" method="post">
-                  <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
-                  <input type="hidden" name="task" id="task" value="notify">
-                  <button class="text-sm text-blue-600 hover:underline">Notify all</a>
-                </form>
-                <form action="/adminportal/suggestion" method="post">
-                  <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
-                  <input type="hidden" name="task" id="task" value="discard">
-                  <button class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
-                </form>
-              </span>
-          </div>
+                  <!-- Buttons to take action on suggestion -->
+                  <span class="flex justify-around mt-3">
 
-          <br>
-          {% elif notification[2] == 'alr' %}
-          <div class="bg-white rounded-3xl p-3 border-4 border-red-500 shadow-2xl font-sans flex flex-col-2">
-            <svg class="h-10 w-10 fill-current text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                clip-rule="evenodd" />
-            </svg>
-            <span class="pl-3 w-full">
-              <h4 class="text-red-500 font-bold">{{ notification[1] }} </h4>
-              <br>
-              <span class="flex justify-around mt-3">
-                <form action="/adminportal/suggestion" method="post">
-                  <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
-                  <input type="hidden" name="task" id="task" value="notify">
-                  <button class="text-sm text-blue-600 hover:underline">Notify all</a>
-                </form>
-                <form action="/adminportal/suggestion" method="post">
-                  <input type="hidden" name="password" id="password" value="{{ pw }}">
-                  <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
-                  <input type="hidden" name="task" id="task" value="discard">
-                  <button class="text-sm text-blue-600 hover:underline">Discard suggestion</a>
-                </form>
-              </span>
-            </span>
-          </div>
-          <br>
-          {% endif %}
+                    <!-- Button to Notify everyone -->
+                    <form action="/adminportal/suggestion" method="post">
+                      <input type="hidden" name="password" id="password" value="{{ pw }}">
+                      <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                      <input type="hidden" name="task" id="task" value="notify">
+                      <button class="text-sm text-blue-600 hover:underline"> Notify all </a>
+                    </form>
 
+                    <!-- Button to Discard Suggestion -->
+                    <form action="/adminportal/suggestion" method="post">
+                      <input type="hidden" name="password" id="password" value="{{ pw }}">
+                      <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                      <input type="hidden" name="task" id="task" value="discard">
+                      <button class="text-sm text-blue-600 hover:underline"> Discard suggestion </a>
+                    </form>
+                  </span>
+                </span>
+              </div>
+            <br>
+
+            {% elif notification[2] == 'rmd' %} <!-- If the suggestion is of type 'Reminder' -->
+
+              <div class="bg-white rounded-3xl p-3 border-4 border-yellow-400 shadow-2xl font-sans flex flex-col-2">
+                
+                <!-- SVG Icon to show -->
+                <svg class="h-10 w-10 fill-current text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                </svg>
+                <span class="pl-3 w-full">
+
+                  <!-- Actual notification content -->
+                  <h4 class="text-yellow-400 font-bold mb-2"> {{ notification[1] }} </h4>
+                
+                  <!-- Buttons to take action on suggestion -->
+                  <span class="flex justify-around mt-3">
+
+                    <!-- Button to Notify everyone -->
+                    <form action="/adminportal/suggestion" method="post">
+                      <input type="hidden" name="password" id="password" value="{{ pw }}">
+                      <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                      <input type="hidden" name="task" id="task" value="notify">
+                      <button class="text-sm text-blue-600 hover:underline"> Notify all </a>
+                    </form>
+
+                    <!-- Button to Discard suggestion -->
+                    <form action="/adminportal/suggestion" method="post">
+                      <input type="hidden" name="password" id="password" value="{{ pw }}">
+                      <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                      <input type="hidden" name="task" id="task" value="discard">
+                      <button class="text-sm text-blue-600 hover:underline"> Discard suggestion </a>
+                    </form>
+                  </span>
+                </span>
+              </div>
+            <br>
+
+            {% elif notification[2] == 'alr' %} <!-- If the suggestion is of type 'Alert' -->
+
+              <div class="bg-white rounded-3xl p-3 border-4 border-red-500 shadow-2xl font-sans flex flex-col-2">
+                
+                <!-- SVG Icon to show -->
+                <svg class="h-10 w-10 fill-current text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <span class="pl-3 w-full">
+
+                  <!-- Actual notification content -->
+                  <h4 class="text-red-500 font-bold mb-2"> {{ notification[1] }} </h4>
+
+                  <!-- Buttons to take action on suggestion -->
+                  <span class="flex justify-around mt-3">
+
+                    <!-- Button to Notify everyone -->
+                    <form action="/adminportal/suggestion" method="post">
+                      <input type="hidden" name="password" id="password" value="{{ pw }}">
+                      <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                      <input type="hidden" name="task" id="task" value="notify">
+                      <button class="text-sm text-blue-600 hover:underline"> Notify all </a>
+                    </form>
+
+                    <!-- Button to Discard suggestion -->
+                    <form action="/adminportal/suggestion" method="post">
+                      <input type="hidden" name="password" id="password" value="{{ pw }}">
+                      <input type="hidden" name="id" id="id" value="{{ notification[0] }}">
+                      <input type="hidden" name="task" id="task" value="discard">
+                      <button class="text-sm text-blue-600 hover:underline"> Discard suggestion </a>
+                    </form>
+                  </span>
+                </span>
+              </div>
+            <br>
+
+            {% endif %}
           {% endfor %}
 
         </div>
@@ -392,20 +461,7 @@
     </div>
   </div>
 
-  <script>
-    const butn1 = document.querySelector("#score");
-    const butn2 = document.querySelector("#status");
-    const butn3 = document.querySelector("#time");
-    const butn4 = document.querySelector("#event");
-    const butn5 = document.querySelector("#role");
-    const form1 = document.querySelector(".block1");
-    const form2 = document.querySelector(".block2");
-    const form3 = document.querySelector(".block3");
-    const form4 = document.querySelector(".block4");
-    const form5 = document.querySelector(".block5");
-
-  </script>
+  <!-- Linking JavaScript File -->
   <script src="../static/admin.js"></script>
 </body>
-
 </html>
