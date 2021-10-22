@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1e2327">
-  <meta name="color-scheme" content="light" />
-  <title> Home - NotiSmart </title>
-  <link rel="stylesheet" href="../static/styles.css">
-  <link rel="icon" href="../static/notification.png">
-</head>
-
+{% extends 'base.html' %}
+{% block title %} Home - NotiSmart {% endblock title %}
+{% block body %}
 <body class="w-full h-full bg-no-repeat bg-cover" style="background-image: url(../static/img5.jpg);">
   <h1 class=" text-4xl text-center py-6 text-gray-800 font-bold font-sans shadow-2xl "> Home - NotiSmart </h1>
   <div class="flex justify-evenly p-4">
@@ -70,4 +59,4 @@
     <button class=" hover:bg-gray-800 text-gray-800 hover:text-blue-400 px-36 p-5 bg-white rounded-full text-center font-bold font-sans text-xl  focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent "> Employee sign up </button>
   </a>
 </body>
-</html>
+{% endblock body %}

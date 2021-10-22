@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1e2327">
-    <meta name="color-scheme" content="light" />
-    <title> Signup - NotiSmart </title>
-    <link rel="stylesheet" href="../static/styles.css">
-    <link rel="icon" href="../static/notification.png">
-</head>
-
+{% extends 'base.html' %}
+{% block title %} Signup - NotiSmart {% endblock title %}
+{% block body %}
 <body>
     <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-700 to to-black">
         <div class="px-10 py-4 mt-4 text-left bg-white shadow-2xl rounded">
@@ -103,4 +92,4 @@
         </div>
     </div>
 </body>
-</html>
+{% endblock body %}
