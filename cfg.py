@@ -35,8 +35,8 @@ else:
 API = cfg['sms bot']['API']
 
 
-# Parsing configuration from notifications.ini
-cfg.read("notifications.ini")
+# Parsing configuration from static/notifications.ini
+cfg.read("static/notifications.ini")
 
 # Notifications for monthly achievement notifications
 ACHIEVE_LEV1 = cfg['Monthly Achievement']['Below_Minimum']

@@ -257,8 +257,8 @@ for notification in notifications:
 # Main Flask Application
 app = Flask(__name__)
 
-ERROR_MSG = """<h3> Something went wrong </h3> <br>
-            <h5> Please Go back and enter all values in correct format </h5>"""
+ERROR_MSG = """<h1> Something went wrong </h1>
+            <h3> Please Go back and enter all values in correct format </h3>"""
 
 # Home Route
 @app.route('/', methods=['GET', 'POST'])
@@ -594,5 +594,10 @@ def create(type):
     return redirect(url_for("admin"), code=307)
 
 
+app.host = "localhost"
+app.port = 5000
+
 if __name__ == '__main__':
+    # app.debug = True
+    # Running Flask Server
     app.run()

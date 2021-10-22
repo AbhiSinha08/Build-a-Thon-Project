@@ -23,6 +23,7 @@
         <button class="text-2xl text-white font-bold transform transition ease-in duration-200 hover:-rotate-6 hover:scale-105 bg-blue-500 hover:bg-blue-600 px-4 mr-4 py-2 rounded-md"><a href="/">HOME</a></button>
       </h1>
     </div>
+    <br><br>
     <div class="grid md:grid-cols-3 gap-5 p-5 ">
       
       <!-- Section to create new notification -->
@@ -35,13 +36,13 @@
             <button class="bg-blue-500 text-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="score">
               Score based Notification </button>
             <button class="bg-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="status">
-              User Status </button>
+              User Status Notification </button>
             <button class="bg-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="time">
-              Scheduled time Notification </button>
+              Time based Notification </button>
             <button class="bg-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="event">
               Event Notification </button>
             <button class="bg-white p-7 py-2 rounded transform transition ease-in duration-200 hover:translate-y-2" id="role">
-              Group Notify </button>
+              Group Notification </button>
           </div><br><br>
           <div>
             
@@ -119,19 +120,21 @@
 
             <!-- Section for creating notification trigger based on user's activity -->
             <div class="block2 p-5 hidden">
-
-              <!-- TODO -->
               <form action="/adminportal">
                 <div class="flex flex-col-2 gap-32">
                   <span class="flex justify-start">
-                    <h3> Set Notification Time For Activity Status &nbsp; </h3>
+
+                    <!-- Input field for setting time of notification -->
+                    <h3> Set Notification Time For inactivity &nbsp; </h3>
                     <br>
                     <input type="time" name="time" id="time" class="px-12 flex justify-around" />
                   </span>
                   <span class="flex justify-end">
+
+                    <!-- Dropdown for setting frequency of notification -->
                     <h3> Frequency </h3>&nbsp; &nbsp;
                     <br />
-                    <input list="frequency" />
+                    <input list="frequency" class="pl-2" />
                     <datalist id="frequency">
                       <option value="Everyday"></option>
                       <option value="In every two days "></option>
@@ -141,7 +144,11 @@
                   </span>
                 </div><br><br>
                 <div class="flex items-baseline justify-around">
+                  
+                  <!-- Auto-generated value for authenticating admin -->
                   <input type="hidden" name="password" id="password" value="{{ pw }}">
+
+                  <!-- Submit Button -->
                   <button class="px-6 py-2 mt-4 text-white bg-blue-700 rounded-lg hover:bg-blue-900"> Create </button>
                 </div>
               </form>
@@ -230,7 +237,7 @@
                     reminder will be sent to employees -->
                   <span class=" flex justify-end">
                     <h3 class="mr-1"> Notify before &nbsp; </h3>
-                    <input type="text" name="days" id="days" class="h-8"><br>
+                    <input type="text" name="days" id="days" class="h-8 pl-1"><br>
                     <h3> &nbsp;Days </h3>
                   </span>
                 </span>
@@ -252,7 +259,7 @@
               </form>
             </div>
 
-            <!-- Sectoin for creating notifications only for some specific role(s) -->
+            <!-- Section for creating notifications only for some specific role(s) -->
             <div class="block5 p-5 hidden">
               <form action="/adminportal/create/role" method="post">
                 <div class="block ">
@@ -341,7 +348,7 @@
             <input type="hidden" name="password" id="password" value="{{ pw }}">
             <button class="text-sm font-semibold text-blue-600 hover:underline"> &#8635; REFRESH </button>
           </form>
-
+          <br>
           <!-- Passing all suggestions in the form of a list -->
           {% for notification in suggestions %}
             {% if notification[2] == 'rwd' %} <!-- If the suggestion is of type 'Reward' -->
