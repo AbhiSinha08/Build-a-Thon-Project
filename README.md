@@ -32,6 +32,7 @@ Installation instructions for the same can be found [here](https://dev.mysql.com
 *(You can also edit host and port number if the MySQL Server is hosted remotely)*
 ###### _The configuration file `config.ini` is pretty structured and simple to edit all your configurations in one place and not to edit everything in the code everytime._
 - From here, you can also change other configurations for the app to use like -- the email account to send email notifications from, password for the admin portal, MySQL Database name for the app to use and much more...
+###### The default password for the admin portal is 'admin'
 - Optionally, You can also customize some notification content to send to employees for some specific triggers which don't need the entire notification text to be entered everytime. This can be done from editing the `notifications.ini` file inside the `static\` folder of the project.
 ### Step 4: Run
 Run the Notification Engine Server by running either &nbsp; `flask run` &nbsp; **OR** &nbsp; `python app.py` &nbsp; command<br/>
