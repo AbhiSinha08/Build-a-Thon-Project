@@ -34,6 +34,6 @@ Installation instructions for the same can be found [here](https://dev.mysql.com
 - From here, you can also change other configurations for the app to use like -- the email account to send email notifications from, password for the admin portal, MySQL Database name for the app to use and much more...
 - Optionally, You can also customize some notification content to send to employees for some specific triggers which don't need the entire notification text to be entered everytime. This can be done from editing the `notifications.ini` file inside the `static\` folder of the project.
 ### Step 4: Run
-Run the Notification Engine Server running either &nbsp; `flask run` &nbsp; **OR** &nbsp; `python app.py` &nbsp; command<br/>
+Run the Notification Engine Server by running either &nbsp; `flask run` &nbsp; **OR** &nbsp; `python app.py` &nbsp; command<br/>
 By default, a flask application runs on port `5000` on `localhost`. So head over to http://localhost:5000 and start using!
 ### Step 4.1: :star:Star [this repository](https://github.com/AbhiSinha08/Build-a-Thon-Project) if you like our work⭐
