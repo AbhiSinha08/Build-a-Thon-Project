@@ -6,7 +6,7 @@
 - [Karuna Sharma](https://github.com/Karunasharma09)
 - [Abhinav Sinha](https://github.com/AbhiSinha08)  
 
-### Presentations:&nbsp; [PDF](https://drive.google.com/file/d/1UzXM07sIJ5gz0jCkOs47qC-H1YZNR7c8/view) , &nbsp; [Video](url)
+### Presentations:&nbsp; [PDF](https://drive.google.com/file/d/1UzXM07sIJ5gz0jCkOs47qC-H1YZNR7c8/view) , &nbsp; [Video](https://drive.google.com/file/d/1RCuF44Y-WDSxCskHYgIEwwubK8SOY2rR/view?usp=sharing)
 
 # Usage Guide
 This Project requires the following tools:
