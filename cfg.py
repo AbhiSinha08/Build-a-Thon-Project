@@ -32,8 +32,6 @@ if WA_OPTION == "YES" or WA_OPTION == "Y":
 else:
     WA_OPTION = False
 
-API = cfg['sms bot']['API']
-
 
 # Parsing configuration from static/notifications.ini
 cfg.read("static/notifications.ini")
@@ -59,3 +57,6 @@ SCORE_WEEK_LEV3 = SCORE_DAY_LEV3.replace("yesterday", "last week")
 SCORE_MONTH_LEV1 = SCORE_DAY_LEV1.replace("yesterday", "last month")
 SCORE_MONTH_LEV2 = SCORE_DAY_LEV2.replace("yesterday", "last month")
 SCORE_MONTH_LEV3 = SCORE_DAY_LEV3.replace("yesterday", "last month")
+
+# Notifications for inactivity of user
+INACTIVE = cfg['User Status']['Inactive']

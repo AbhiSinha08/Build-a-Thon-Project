@@ -42,32 +42,32 @@ def afterTime(hours, minutes):
 
     time.sleep(wait) # Pausing function execution till the given time
 
-# Function to pause execution of a thread till a new day at 5 AM
+# Function to pause execution of a thread till a new day at 8 AM
 def startDay():
-    afterTime(5, 0)
+    afterTime(8, 0)
 
 
-# Function to pause execution of a thread till start of a new month at 5 AM
+# Function to pause execution of a thread till start of a new month at 8 AM
 def startMonth():
     year, month, date, day = curDate()
-    wait = datetime.datetime(year, month, 1, 5, 2, 0).timestamp() - time.time()
+    wait = datetime.datetime(year, month, 1, 8, 2, 0).timestamp() - time.time()
     if wait < 0:
         month += 1
         if month == 13:
             month = 1
             year += 1
-        wait = datetime.datetime(year, month, 1, 5, 2, 0).timestamp() - time.time()
+        wait = datetime.datetime(year, month, 1, 8, 2, 0).timestamp() - time.time()
     time.sleep(wait)
 
 
-# Function to pause execution of a thread till start of a new week at 5 AM
+# Function to pause execution of a thread till start of a new week at 8 AM
 def startWeek():
     year, month, date, day = curDate()
     d = {1:0, 2:6, 3:5, 4:4, 5:3, 6:2, 0:1}
     x = d[day]
-    wait = datetime.datetime(year, month, date, 5, 1, 0).timestamp() - time.time() + (x*86400)
+    wait = datetime.datetime(year, month, date, 8, 1, 0).timestamp() - time.time() + (x*86400)
     if wait < 0:
-        wait = datetime.datetime(year, month, date, 5, 1, 0).timestamp() - time.time() + (7*86400)
+        wait = datetime.datetime(year, month, date, 8, 1, 0).timestamp() - time.time() + (7*86400)
     time.sleep(wait)
 
 

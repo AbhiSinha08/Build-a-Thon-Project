@@ -1,19 +1,22 @@
 """ File: app.py / server.py """
 """Main multi-threaded Flask application for the trigger engine.
-Run only this script using ```python app.py``` or ```flask run```"""
+Run only this script using `python app.py` or `flask run`"""
 
 # Importing framework and libraries
 from flask import Flask, render_template, request, redirect, url_for
 import threading
 from collections import defaultdict
 import json
+print("Importing database utils...")
 import db
 import timer
+print("Importing email and whatsapp bots...")
 import bots.mail
 if db.WA_OPTION:
     import bots.whatsapp
 
 # Queue for new notifications to be sent to the employee's portal
+print("Creating an empty queue for new notifications...")
 queue = defaultdict(lambda: [])
 
 # Wrapper function for thread to notify a user
@@ -23,6 +26,7 @@ def notifyThread(email, phone, content, type, eid, sub):
                 'type': type,
                 'content': content
     })
+    print("Notification queued for Employee ID:", eid)
     # Sending mail and optionally, whatsapp notifications
     bots.mail.sendMail(email, sub, content)
     if db.WA_OPTION:
@@ -156,6 +160,7 @@ def monthThread():
 # Creating and starting day, week and month threads
 # These will be created and started as soon as the flask server is run
 # to run at the start of every day, week and month respectively
+print("Starting threads for various triggers...")
 threading.Thread(target=dayThread, daemon=True).start()
 threading.Thread(target=weekThread, daemon=True).start()
 threading.Thread(target=monthThread, daemon=True).start()
@@ -209,6 +214,7 @@ def timeNotif(hr, mn, freq, content, id, type='rmd', eid=False):
         newTrig = f"TM {hr} {mn} {freq-1}"
         db.changeTrigger(id, newTrig)
         freq -= 1
+        # Just a small timer to make sure the function doesn't run multiple times continuosly
         timer.sleep(2)
     
     # Delete the notification from database after 0 days are remaining
@@ -223,6 +229,46 @@ def rolesNotif(content, roles, type='rmd'):
             email, phone, eid = user[1], user[2], int(user[6])
             notify(email, phone, content, type, eid)
 
+
+# Funcion to sent alerts if a trigger on user's inactivity is defined
+# Returns a false flag when the thread is terminated
+def statusNotif():
+    try:
+        # Checking if user inactivity trigger is defined by the admin
+        notification = db.pending(trig="IA")[0]
+    except:
+        # If not defined, terminating the function 
+        # and returning a flag to check that the thread is not active
+        return False
+    _, hr, mn, everyday = notification[4].split()
+    id = int(notification[0])
+    hr, mn, everyday = int(hr), int(mn), bool(int(everyday))
+    # Pausing thread execution till the given time of the day
+    timer.afterTime(hr, mn)
+    for user in db.getUsers(): # Fetching data of users
+        activity, eid = int(user[7]), int(user[6])
+        # If the user was inactive, sending alert
+        if activity == 0:
+            email, phone = user[1], user[2]
+            notify(email, phone, db.INACTIVE, "alr", eid)
+        # Else, resetting activity for the day
+        else:
+            db.addActivity(eid, reset=True)
+
+    # Continuing the thread if the trigger was defined for everyday
+    if everyday:
+        # Just a small timer to make sure the function doesn't run multiple times continuosly
+        timer.sleep(2)
+        return statusNotif()
+    db.delete(id)
+    # Returning a false flag to check that the thread is not active
+    return False
+
+# Wrapper function for a thread to send alerts based on user's inactivity
+def statusNotifThread():
+    global statusNotifThreadActive
+    statusNotifThreadActive = statusNotif()
+
 # Function to notify everyone
 def notifyAll(content, type):
     for user in db.getUsers():
@@ -233,6 +279,7 @@ def notifyAll(content, type):
 # Creating and starting threads for all stored time based notifications
 # This section will run as soon as the flask server is run
 # Checking for time based notifications to send at a specified time
+print("Loading previously pending notifications from the database...")
 notifications = db.pending(trig="TM")
 for notification in notifications:
     _, hr, mn, freq = notification[4].split()
@@ -253,6 +300,12 @@ for notification in notifications:
                     daemon=True,
                     args=(hr, mn, freq, content, id, type, eid)).start()
 
+# Creating and starting a thread to notify based on user's inactivity
+statusNotifThreadActive = True
+threading.Thread(target=statusNotifThread, daemon=True).start()
+
+
+print("Starting Flask Server...")
 
 # Main Flask Application
 app = Flask(__name__)
@@ -428,8 +481,22 @@ def api():
                             daemon=True,
                             args=(eid, percent)).start()
             return """Monthly achievement of the employee has been added
-                    and the employee has been notified accordingly"""
+                    and the employee will been notified accordingly
+                    if the trigger for the same has been set"""
         
+        # If API call is to mark activity for an user today
+        elif request.json['Header'] == 'Activity Status':
+            # Parsing Employee_id from the recieved JSON
+            eid = request.json['Employee_id']
+            if request.json['Status'] == "Active":
+                # Adding activity of the employee
+                db.addActivity(eid)
+                return "User's Activity point has been added for today"
+            elif request.json['Status'] == "Inactive":
+                # Resetting activity of the employee
+                db.addActivity(eid, reset=True)
+                return "User has been marked inactive for today"
+
         # If API call is to signup a new employee
         elif request.json['Header'] == 'Signup':
             # Parsing all values from the recieved JSON
@@ -520,6 +587,40 @@ def create(type):
             except:
                 return ERROR_MSG
 
+    # If creating trigger for User's inactivity
+    elif type == 'inactivity':
+        try:
+            # Deleting any existing trigger condition for same type
+            id = db.pending(trig="IA")[0][0]
+            db.delete(id)
+        except:
+            pass
+        finally:
+            try:
+                # Getting input data from the HTML form
+                clock = request.form['time']
+                hr, mn = map(int, clock.split(':'))
+                freq = int(request.form['frequency'])
+            except:
+                return ERROR_MSG
+            
+            # Creating Trigger condition to store in database
+            values = {
+                'content': "NULL",
+                'grp': "ALL",
+                'type': "alr",
+                'triggers': f"IA {hr} {mn} {freq}"
+            }
+            id = db.insert(values) # Adding notification to the database
+            global statusNotifThreadActive
+            if not statusNotifThreadActive:
+                # Setting a flag to check that the Inactivity alert thread is active
+                statusNotifThreadActive = True
+                # starting a thread to send inactivity alert on the specified time
+                threading.Thread(target=statusNotifThread,
+                                daemon=True).start()
+                timer.sleep(0.1)
+
     # If creating new time-based notification
     elif type == 'time':
         try:
@@ -550,6 +651,7 @@ def create(type):
                         daemon=True,
                         args=(hr, mn, noOfDays, content, id, notitype)).start()
         timer.sleep(0.1)
+        
 
     # If creating notification for an event
     elif type == 'event':
@@ -590,6 +692,7 @@ def create(type):
         timer.sleep(0.1)
 
 
+
     # Redirecting to the Admin Portal with 307 status code
     return redirect(url_for("admin"), code=307)
 
@@ -601,3 +704,4 @@ if __name__ == '__main__':
     # app.debug = True
     # Running Flask Server
     app.run()
+    print("Server terminated")

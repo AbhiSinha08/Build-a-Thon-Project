@@ -2,6 +2,7 @@
 """ various functions to operate on MySQL database for the app """
 
 import mysql.connector as mysql
+print("Reading config files...")
 from cfg import *
 
 
@@ -22,6 +23,7 @@ def connection(database=False):
 # Trying Connecting to MySQL server with credentials in config file
 # Connection to start as soon as this script is imported
 try:
+    print(f"Connecting to MySQL server on {HOST}:{PORT}...")
     conn = connection()
 except mysql.errors.ProgrammingError:
     print("MySQL User or password incorrect in config.ini")
@@ -52,7 +54,8 @@ def createUsersTable():
                     phone CHAR(10),
                     score_d INT,
                     score_w INT,
-                    score_m INT
+                    score_m INT,
+                    day_activity TINYINT
                 )""")
     conn.commit()
     cur.close()
@@ -60,8 +63,8 @@ def createUsersTable():
 # Function to add a new user in the above creted table of users
 def newUser(v):
     sql = """INSERT INTO users
-            (name, eid, sex, age, grp, email, phone, score_d, score_w, score_m)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, 0, 0, 0)"""
+            (name, eid, sex, age, grp, email, phone, score_d, score_w, score_m, day_activity)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, 0, 0, 0, 0)"""
     values = (v['name'], v['eid'], v['sex'], v['age'],
             v['grp'], v['email'], v['phone'])
     cur = conn.cursor()
@@ -174,6 +177,22 @@ def resetScore(week=False, month=False):
     conn.commit()
     cur.close()
 
+# Function to add activity to an user fed through api
+# A reset parameter can be passed to reset the activity instead
+def addActivity(eid, reset=False):
+    if reset:
+        sql = """UPDATE users SET
+                day_activity = 0
+                WHERE eid = %s"""
+    else:
+        sql = """UPDATE users SET
+                day_activity = day_activity + 1
+                WHERE eid = %s"""
+    values = (eid,)
+    cur = conn.cursor()
+    cur.execute(sql, values)
+    conn.commit()
+    cur.close()
 
 # Function to change trigger conditions of a specific notification
 # by it's primary key i.e. id
@@ -197,7 +216,7 @@ def getUsers(eid=False):
         sql = f"""SELECT grp, email, phone, score_d, score_w, score_m
                 FROM users WHERE eid = {eid}"""
     else:
-        sql = "SELECT grp, email, phone, score_d, score_w, score_m, eid FROM users"
+        sql = "SELECT grp, email, phone, score_d, score_w, score_m, eid, day_activity FROM users"
     cur = conn.cursor(buffered=True)
     cur.execute(sql)
     result = cur.fetchall()
@@ -205,22 +224,25 @@ def getUsers(eid=False):
     return result
 
 
-# This section to run as soon as this script is imported
+# This section will run as soon as this script is imported
 # To check if the database for this notificatoin engine exists or not
 # The name of database is taken from the config file
 # If not existing already (e.g. running this engine for the first time),
 # automatically creates the database and 3 tables - users, admin, suggestions
 # Also connects to the database of MySQL server
+print(f"Connecting to {DATABASE} database...")
 cur = conn.cursor(buffered=True)
 newDB = False
 cur.execute("SHOW DATABASES")
 if (DATABASE,) not in cur.fetchall():
+    print(f"No database named {DATABASE} found. Creating Database...")
     createDB()
     newDB = True
 cur.close()
 conn.close()
 conn = connection(DATABASE)
 if newDB:
+    print("Creating required tables in the database...")
     createUsersTable()
     createTable("admin")
     createTable("suggestions")

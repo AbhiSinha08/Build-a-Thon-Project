@@ -1,0 +1,8 @@
+// send json data to localhost:5000/api with POST method
+
+{
+    "Header": "Activity Status", // The type of data to be fed
+    "Employee_id": 123456, // For whom the daily activity is to be added
+    "Status": "Active" // This data value can be either "Active" or "Inactive"
+    // "Status": "Inactive"
+}

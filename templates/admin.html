@@ -110,7 +110,7 @@
 
             <!-- Section for creating notification trigger based on user's activity -->
             <div class="block2 p-5 hidden">
-              <form action="/adminportal">
+              <form action="/adminportal/create/inactivity" method="post">
                 <div class="flex flex-col-2 gap-32">
                   <span class="flex justify-start">
 
@@ -122,15 +122,12 @@
                   <span class="flex justify-end">
 
                     <!-- Dropdown for setting frequency of notification -->
-                    <h3> Frequency </h3>&nbsp; &nbsp;
+                    <h3> Frequency </h3> &nbsp; &nbsp;
                     <br />
-                    <input list="frequency" class="pl-2" />
-                    <datalist id="frequency">
-                      <option value="Everyday"></option>
-                      <option value="In every two days "></option>
-                      <option value="Once a week "></option>
-                      <option value="Once in a month "></option>
-                    </datalist>
+                    <select id="frequency" name="frequency" class="px-12">
+                      <option value="0"> Only Today </option>
+                      <option value="1"> Everyday </option>
+                    </select>
                   </span>
                 </div><br><br>
                 <div class="flex items-baseline justify-around">
